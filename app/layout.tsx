@@ -4,8 +4,8 @@ import NavBar from "./components/shared/navbar";
 import { Providers } from "./styles/Providers";
 
 export const metadata: Metadata = {
-  title: "Fatality Discord Bot",
-  description: "Some controls for fatality discord bot",
+  title: "Trevors Portfolio",
+  description: "Personal portfolio",
 };
 
 export default function RootLayout(props: React.PropsWithChildren) {
