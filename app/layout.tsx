@@ -6,9 +6,6 @@ import { Providers } from "./styles/Providers";
 export const metadata: Metadata = {
   title: "Trevors Portfolio",
   description: "Personal portfolio",
-  icons: {
-    icon: "/images/icon.png",
-  },
 };
 
 export default function RootLayout(props: React.PropsWithChildren) {
