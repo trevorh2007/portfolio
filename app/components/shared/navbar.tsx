@@ -31,8 +31,6 @@ const NavBar = () => {
     <NavBarWrapper>
       <Link href="/">Home</Link>
       <Link href="/contact">Contact page</Link>
-      <Link href="/contact">Another Link to Contact page</Link>
-      <Link href="/">Link to home</Link>
       <button onClick={() => setDarkMode(!darkMode)}>
         {darkMode ? "Turn on the Lights" : "Turn off the lights"}
       </button>
