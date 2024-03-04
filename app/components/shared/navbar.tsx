@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useDarkModeContext } from "@/app/styles/Providers";
 import styled from "styled-components";
 
-export const NavBarWrapper = styled.div`
+const NavBarWrapper = styled.div`
   display: flex;
   padding: 10px;
   background-color: ${({ theme }) => theme.colors.backgroundLight};
@@ -29,7 +29,9 @@ const NavBar = () => {
   const { darkMode, setDarkMode } = useDarkModeContext();
   return (
     <NavBarWrapper>
-      <Link href="/">Home</Link>
+      <Link href="/" prefetch={false}>
+        Home
+      </Link>
       <Link href="/contact">Contact page</Link>
       <button onClick={() => setDarkMode(!darkMode)}>
         {darkMode ? "Turn on the Lights" : "Turn off the lights"}
