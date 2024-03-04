@@ -12,11 +12,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
   let currentTheme = !darkMode ? lightTheme : darkTheme;
 
   return (
-    <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>
-      <StyledComponentsRegistry>
+    <StyledComponentsRegistry>
+      <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>
         <ThemeProvider theme={currentTheme}>{children}</ThemeProvider>
-      </StyledComponentsRegistry>
-    </DarkModeContext.Provider>
+      </DarkModeContext.Provider>
+    </StyledComponentsRegistry>
   );
 }
 
