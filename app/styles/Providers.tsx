@@ -1,5 +1,4 @@
 "use client";
-
 import StyledComponentsRegistry from "./registry";
 import { ThemeProvider } from "styled-components";
 import { createContext, useContext, useState } from "react";
