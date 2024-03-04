@@ -7,6 +7,16 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  async redirects() {
+    basePath: process.env.NODE_ENV === "development" ? "" : "/portfolio";
+    return [
+      {
+        source: "/",
+        destination: "/home",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

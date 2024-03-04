@@ -29,9 +29,7 @@ const NavBar = () => {
   const { darkMode, setDarkMode } = useDarkModeContext();
   return (
     <NavBarWrapper>
-      <Link href="/" prefetch={false}>
-        Home
-      </Link>
+      <Link href="/">Home</Link>
       <Link href="/contact">Contact page</Link>
       <button onClick={() => setDarkMode(!darkMode)}>
         {darkMode ? "Turn on the Lights" : "Turn off the lights"}
