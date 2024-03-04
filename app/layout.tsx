@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Providers from "./styles/Providers";
 import GlobalStyles from "./styles/GlobalStyles";
-import { ThemeProvider } from "styled-components";
-import theme from "./styles/theme";
-
-const inter = Inter({ subsets: ["latin"] });
+import NavBar from "./components/navbar/navbar";
+import { Providers } from "./styles/Providers";
 
 export const metadata: Metadata = {
   title: "Fatality Discord Bot",
@@ -19,6 +14,7 @@ export default function RootLayout(props: React.PropsWithChildren) {
       <body>
         <Providers>
           <GlobalStyles />
+          <NavBar />
           {props.children}
         </Providers>
       </body>
