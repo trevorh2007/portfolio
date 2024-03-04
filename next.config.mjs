@@ -8,7 +8,6 @@ const nextConfig = {
     styledComponents: true,
   },
   async redirects() {
-    basePath: process.env.NODE_ENV === "development" ? "" : "/portfolio";
     return [
       {
         source: "/",
