@@ -23,7 +23,7 @@ const TimerComponent: FC<TimerProps> = (props): JSX.Element => {
   let { seconds, minutes, hours, days, pause, resume } = useTimer({
     autoStart: true,
     expiryTimestamp: props.userTime,
-    onExpire: () => alert("Timer up"),
+    onExpire: () => alert("Timer is up"),
   });
 
   return (
