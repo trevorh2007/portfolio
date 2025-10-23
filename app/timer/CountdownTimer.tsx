@@ -25,7 +25,10 @@ const TimerComponent: FC<TimerProps> = (props): JSX.Element => {
     expiryTimestamp: props.userTime,
     onExpire: () => {
       // Modern alternative to alert - could be replaced with a toast or modal
-      console.warn("Timer is up!");
+      if (process.env.NODE_ENV !== "production") {
+        // eslint-disable-next-line no-console
+        console.warn("Timer is up!");
+      }
       // Or use a proper notification system
     },
   });

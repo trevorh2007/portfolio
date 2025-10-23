@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import GlobalStyles from "./styles/GlobalStyles";
+
+import ErrorBoundary from "./components/shared/ErrorBoundary";
 import NavBar from "./components/shared/navbar";
+import GlobalStyles from "./styles/GlobalStyles";
 import { Providers } from "./styles/Providers";
 
 export const metadata: Metadata = {
@@ -14,8 +16,10 @@ export default function RootLayout(props: React.PropsWithChildren) {
       <body>
         <Providers>
           <GlobalStyles />
-          <NavBar />
-          {props.children}
+          <ErrorBoundary>
+            <NavBar />
+            {props.children}
+          </ErrorBoundary>
         </Providers>
       </body>
     </html>
