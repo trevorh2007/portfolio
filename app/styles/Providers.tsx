@@ -4,12 +4,18 @@ import { ThemeProvider } from "styled-components";
 import { createContext, useContext, useState } from "react";
 import { lightTheme, darkTheme } from "./themes";
 
-const DarkModeContext = createContext<any>(undefined);
+const DarkModeContext = createContext<
+  | {
+      darkMode: boolean;
+      setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+    }
+  | undefined
+>(undefined);
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState(false);
 
-  let currentTheme = !darkMode ? lightTheme : darkTheme;
+  const currentTheme = !darkMode ? lightTheme : darkTheme;
 
   return (
     <StyledComponentsRegistry>

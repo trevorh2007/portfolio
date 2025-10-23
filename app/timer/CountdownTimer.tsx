@@ -20,10 +20,14 @@ const ButtonGroup = styled.div`
 `;
 
 const TimerComponent: FC<TimerProps> = (props): JSX.Element => {
-  let { seconds, minutes, hours, days, pause, resume } = useTimer({
+  const { seconds, minutes, hours, days, pause, resume } = useTimer({
     autoStart: true,
     expiryTimestamp: props.userTime,
-    onExpire: () => alert("Timer is up"),
+    onExpire: () => {
+      // Modern alternative to alert - could be replaced with a toast or modal
+      console.warn("Timer is up!");
+      // Or use a proper notification system
+    },
   });
 
   return (

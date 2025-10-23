@@ -1,7 +1,10 @@
 "use client";
+
 import Link from "next/link";
-import { useDarkModeContext } from "@/app/styles/Providers";
+
 import styled from "styled-components";
+
+import { useDarkModeContext } from "@/app/styles/Providers";
 
 const NavBarWrapper = styled.div`
   display: flex;
@@ -26,7 +29,11 @@ const NavBarWrapper = styled.div`
 `;
 
 const NavBar = () => {
-  const { darkMode, setDarkMode } = useDarkModeContext();
+  const { darkMode, setDarkMode } = useDarkModeContext() || {
+    darkMode: false,
+    setDarkMode: () => {},
+  };
+
   return (
     <NavBarWrapper>
       <Link href="/">Home</Link>

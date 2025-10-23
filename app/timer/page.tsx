@@ -42,7 +42,7 @@ const Timer = () => {
       {resetTimer ? (
         <TimerComponent userTime={userTime} setResetTimer={setResetTimer} />
       ) : (
-        <div></div>
+        <></>
       )}
       {!resetTimer ? (
         <button onClick={() => setResetTimer(true)}>Start Timer</button>
