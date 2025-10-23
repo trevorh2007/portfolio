@@ -38,7 +38,7 @@ const Timer = () => {
 
   return (
     <TimerWrapper>
-      {!resetTimer ? <input onChange={(e) => handleChange(e)} /> : <></>}
+      {!resetTimer ? <input onChange={e => handleChange(e)} /> : <></>}
       {resetTimer ? (
         <TimerComponent userTime={userTime} setResetTimer={setResetTimer} />
       ) : (
