@@ -19,3 +19,7 @@ export const darkTheme = {
     text: "#FFF",
   },
 };
+
+// Export the theme type for TypeScript
+export const theme = lightTheme;
+export type Theme = typeof theme;
