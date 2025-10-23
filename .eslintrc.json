@@ -1,6 +1,10 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"],
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
+  "plugins": ["prettier"],
   "rules": {
+    // Prettier integration
+    "prettier/prettier": "error",
+
     // Code Quality Rules (2025 Best Practices)
     "no-console": "warn",
     "no-debugger": "error",
@@ -30,14 +34,7 @@
     "no-await-in-loop": "warn",
     "no-eval": "error",
     "no-implied-eval": "error",
-    "no-new-func": "error",
-
-    // Code Formatting
-    "quotes": ["error", "double"],
-    "semi": ["error", "always"],
-    "comma-dangle": ["error", "always-multiline"],
-    "object-curly-spacing": ["error", "always"],
-    "array-bracket-spacing": ["error", "never"]
+    "no-new-func": "error"
   },
   "ignorePatterns": [
     "node_modules/**",
