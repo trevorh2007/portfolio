@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout(props: React.PropsWithChildren) {
   return (
-    <html>
+    <html lang="en">
       <body>
         <Providers>
           <GlobalStyles />
