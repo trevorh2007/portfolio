@@ -136,6 +136,14 @@ portfolio/
 - **Prettier**: Consistent code formatting
 - **TypeScript**: Strict mode with modern configurations
 
+### Testing & CI/CD
+
+- **Jest + React Testing Library**: Comprehensive test suite with accessibility-first testing
+- **Automated PR Testing**: Pull requests get automated test result cards
+- **Coverage Reporting**: Track test coverage with visual indicators
+- **Quality Gates**: No failing tests can reach production
+- **GitHub Actions**: Automated testing, building, and deployment
+
 ## 🚀 Deployment
 
 The portfolio is automatically deployed to GitHub Pages using GitHub Actions:

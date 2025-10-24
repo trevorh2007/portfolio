@@ -32,6 +32,9 @@ const config = {
     "!app/styles/**",
   ],
 
+  // Coverage reporters
+  coverageReporters: ["text", "lcov", "json", "json-summary"],
+
   // Relaxed coverage thresholds for CI
   coverageThreshold: {
     global: {
