@@ -32,8 +32,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  test:
-    name: Quality Checks & Tests
+  lint-and-typecheck:
+    name: Lint & Type Check
     runs-on: ubuntu-latest
 
     steps:
@@ -49,37 +49,20 @@ jobs:
       - name: Run ESLint 🔍
         run: npm run lint
 
+  jest-tests:
+    name: Jest Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
+        uses: ./.github/workflows/setup-node
+
       - name: Run Jest tests 🧪
         id: jest
-        run: |
-          npm run test:ci || echo "test-failed=true" >> $GITHUB_OUTPUT
-        continue-on-error: true
-
-      - name: Generate test summary 📝
-        if: always()
-        run: |
-          echo "## 🧪 Test Results" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          if [ -f coverage/lcov-report/index.html ]; then
-            echo "### 📊 Coverage Summary" >> $GITHUB_STEP_SUMMARY
-            echo "| Metric | Percentage |" >> $GITHUB_STEP_SUMMARY
-            echo "|--------|------------|" >> $GITHUB_STEP_SUMMARY
-            
-            # Extract coverage percentages from the coverage summary
-            if [ -f coverage/coverage-summary.json ]; then
-              statements=$(cat coverage/coverage-summary.json | grep -o '"statements":{"total":[0-9]*,"covered":[0-9]*,"skipped":[0-9]*,"pct":[0-9.]*' | grep -o 'pct":[0-9.]*' | cut -d':' -f2)
-              branches=$(cat coverage/coverage-summary.json | grep -o '"branches":{"total":[0-9]*,"covered":[0-9]*,"skipped":[0-9]*,"pct":[0-9.]*' | grep -o 'pct":[0-9.]*' | cut -d':' -f2)
-              functions=$(cat coverage/coverage-summary.json | grep -o '"functions":{"total":[0-9]*,"covered":[0-9]*,"skipped":[0-9]*,"pct":[0-9.]*' | grep -o 'pct":[0-9.]*' | cut -d':' -f2)
-              lines=$(cat coverage/coverage-summary.json | grep -o '"lines":{"total":[0-9]*,"covered":[0-9]*,"skipped":[0-9]*,"pct":[0-9.]*' | grep -o 'pct":[0-9.]*' | cut -d':' -f2)
-              
-              echo "| Statements | ${statements}% |" >> $GITHUB_STEP_SUMMARY
-              echo "| Branches | ${branches}% |" >> $GITHUB_STEP_SUMMARY  
-              echo "| Functions | ${functions}% |" >> $GITHUB_STEP_SUMMARY
-              echo "| Lines | ${lines}% |" >> $GITHUB_STEP_SUMMARY
-            fi
-          fi
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "✅ All tests passed successfully!" >> $GITHUB_STEP_SUMMARY
+        run: npm run test:ci
 
       - name: Comment PR with test results 💬
         if: github.event_name == 'pull_request'
@@ -88,18 +71,9 @@ jobs:
           script: |
             const fs = require('fs');
 
-            // Check if tests failed
-            const testsFailed = '${{ steps.jest.outputs.test-failed }}' === 'true';
-
             // Read test results
             let testSummary = `## 🧪 Jest Test Results\n\n`;
-
-            if (testsFailed) {
-              testSummary += '❌ **Tests Failed**\n\n';
-              testSummary += 'Some tests did not pass. Please check the [workflow logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.\n\n';
-            } else {
-              testSummary += '✅ **All tests passed successfully!**\n\n';
-            }
+            testSummary += '✅ **All tests passed successfully!**\n\n';
 
             try {
               // Check if coverage summary exists
@@ -130,20 +104,13 @@ jobs:
                 testSummary += 'Current thresholds for CI: **40%** for all metrics\n\n';
               }
               
-              if (!testsFailed) {
-                testSummary += '🎉 **Ready to merge!** All quality checks passed.\n\n';
-              } else {
-                testSummary += '🔧 **Action required:** Please fix failing tests before merging.\n\n';
-              }
-              
+              testSummary += '🎉 **Ready to merge!** All quality checks passed.\n\n';
               testSummary += `📋 **Full Details**: [View workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n`;
               testSummary += `📊 **Coverage Report**: Available in Actions artifacts`;
               
             } catch (error) {
               testSummary += '⚠️ Could not read detailed coverage summary.\n\n';
-              if (!testsFailed) {
-                testSummary += '✅ **Tests completed successfully.**';
-              }
+              testSummary += '✅ **Tests completed successfully.**';
             }
 
             // Find existing comment
@@ -175,11 +142,6 @@ jobs:
               });
             }
 
-            // Fail the job if tests failed
-            if (testsFailed) {
-              core.setFailed('Jest tests failed');
-            }
-
       - name: Upload test coverage 📊
         uses: actions/upload-artifact@v4
         if: always()
@@ -191,7 +153,7 @@ jobs:
   build:
     name: Build & Deploy
     runs-on: ubuntu-latest
-    needs: test
+    needs: [lint-and-typecheck, jest-tests]
 
     steps:
       - name: Checkout 🛎️
