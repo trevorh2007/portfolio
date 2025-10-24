@@ -1,5 +1,10 @@
 # 🚀 Trevor's Portfolio
 
+[![Build & Test](https://github.com/trevorh2007/portfolio/actions/workflows/publish.yml/badge.svg)](https://github.com/trevorh2007/portfolio/actions/workflows/publish.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6.3-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.0.3-black?logo=next.js)](https://nextjs.org/)
+[![Tests](https://img.shields.io/badge/Tests-Jest%20%2B%20RTL-green?logo=jest)](https://jestjs.io/)
+
 A modern, responsive portfolio built with Next.js 15, TypeScript, and styled-components, showcasing
 clean code practices and industry-standard tooling.
 
@@ -8,12 +13,14 @@ clean code practices and industry-standard tooling.
 - **⚡ Next.js 15** with App Router for optimal performance
 - **🔷 TypeScript** with strict configuration for type safety
 - **💅 Styled Components** for CSS-in-JS styling with themes
+- **🧪 Jest + React Testing Library** for comprehensive testing
 - **🔄 Error Boundaries** for graceful error handling
 - **⏳ Loading States** with skeleton loaders and spinners
 - **🌙 Dark/Light Mode** theme switching
 - **⏰ Interactive Timer** with countdown functionality
 - **📱 Responsive Design** for all device sizes
 - **🔧 Modern Tooling**: ESLint 9 + Prettier + TypeScript strict mode
+- **🚀 GitHub Actions** CI/CD with automated testing and deployment
 
 ## 🛠️ Tech Stack
 
@@ -128,6 +135,14 @@ portfolio/
 - **ESLint**: 2025 best practices with comprehensive rules
 - **Prettier**: Consistent code formatting
 - **TypeScript**: Strict mode with modern configurations
+
+### Testing & CI/CD
+
+- **Jest + React Testing Library**: Comprehensive test suite with accessibility-first testing
+- **Automated PR Testing**: Pull requests get automated test result cards
+- **Coverage Reporting**: Track test coverage with visual indicators
+- **Quality Gates**: No failing tests can reach production
+- **GitHub Actions**: Automated testing, building, and deployment
 
 ## 🚀 Deployment
 

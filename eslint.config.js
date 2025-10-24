@@ -124,6 +124,7 @@ export default [
       "coverage/**",
       "eslint.config.js", // Don't lint the config file itself
       "jest.config.cjs", // Don't lint jest config
+      "jest.config.ci.cjs", // Don't lint CI jest config
       "jest.setup.cjs", // Don't lint jest setup
       "next.config.mjs", // Don't lint Next.js config
       "next-env.d.ts", // Don't lint Next.js generated types
