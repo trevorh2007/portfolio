@@ -13,7 +13,9 @@ const pulse = keyframes`
   50% { opacity: 0.5; }
 `;
 
-const LoadingContainer = styled.div<{ fullScreen?: boolean }>`
+const LoadingContainer = styled.div.withConfig({
+  shouldForwardProp: prop => prop !== "fullScreen",
+})<{ fullScreen?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,7 +84,11 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   message = "Loading...",
   fullScreen = false,
 }) => (
-  <LoadingContainer fullScreen={fullScreen}>
+  <LoadingContainer
+    fullScreen={fullScreen}
+    role="status"
+    aria-label="Loading content"
+  >
     <Spinner />
     <LoadingText>{message}</LoadingText>
   </LoadingContainer>
@@ -97,7 +103,7 @@ export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
   lines = 3,
   avatar = false,
 }) => (
-  <SkeletonContainer>
+  <SkeletonContainer role="status" aria-label="Loading content skeleton">
     {avatar && (
       <div
         style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}
@@ -116,6 +122,7 @@ export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
     {Array.from({ length: lines }, (_, i) => (
       <SkeletonLine
         key={i}
+        data-testid={`skeleton-line-${i}`}
         width={
           i === lines - 1 && lines > 1 ? `${Math.random() * 40 + 40}%` : "100%"
         }

@@ -49,7 +49,7 @@ interface LoadingState {
   isLoading: boolean;
   startLoading: () => void;
   stopLoading: () => void;
-  // eslint-disable-next-line no-unused-vars
+
   withLoading: <T>(asyncFn: () => Promise<T>) => Promise<T>;
 }
 
