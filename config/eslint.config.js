@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: dirname(__dirname), // Go up one level since we're in config/
   recommendedConfig: js.configs.recommended,
 });
 
@@ -89,7 +89,7 @@ export default [
 
   // Test files specific configuration
   {
-    files: ["**/__tests__/**/*", "**/*.{test,spec}.*", "jest.setup.js"],
+    files: ["**/__tests__/**/*", "**/*.{test,spec}.*", "config/jest/*.cjs"],
     languageOptions: {
       globals: {
         jest: "readonly",
@@ -122,10 +122,8 @@ export default [
       "dist/**",
       "build/**",
       "coverage/**",
-      "eslint.config.js", // Don't lint the config file itself
-      "jest.config.cjs", // Don't lint jest config
-      "jest.config.ci.cjs", // Don't lint CI jest config
-      "jest.setup.cjs", // Don't lint jest setup
+      "config/eslint.config.js", // Don't lint the config file itself
+      "config/jest/*.cjs", // Don't lint jest configs
       "next.config.mjs", // Don't lint Next.js config
       "next-env.d.ts", // Don't lint Next.js generated types
     ],

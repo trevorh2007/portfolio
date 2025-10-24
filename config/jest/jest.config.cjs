@@ -1,18 +1,20 @@
 const nextJest = require("next/jest");
+const path = require("path");
 
 /** @type {import('jest').Config} */
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files
-  dir: "./",
+  dir: path.join(__dirname, "../../"),
 });
 
 // Add any custom config to be passed to Jest
 const config = {
   coverageProvider: "v8",
   testEnvironment: "jsdom",
+  rootDir: path.join(__dirname, "../../"),
 
   // Setup files
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.cjs"],
+  setupFilesAfterEnv: ["<rootDir>/config/jest/jest.setup.cjs"],
 
   // Module name mapping for absolute imports
   moduleNameMapper: {

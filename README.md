@@ -103,8 +103,13 @@ portfolio/
 │   └── workflows/
 │       ├── publish.yml     # Auto-deployment to GitHub Pages
 │       └── setup-node/     # Reusable Node.js setup action
-├── .eslintrc.json          # ESLint configuration
-├── .prettierrc.json        # Prettier configuration
+├── config/                 # Configuration files (organized structure)
+│   ├── jest/              # Jest testing configuration
+│   │   ├── jest.config.cjs      # Main Jest config
+│   │   ├── jest.config.ci.cjs   # CI-optimized Jest config
+│   │   └── jest.setup.cjs       # Jest test setup
+│   ├── eslint.config.js    # ESLint 9.x flat configuration
+│   └── prettier.config.js  # Prettier formatting configuration
 ├── tsconfig.json           # TypeScript configuration
 ├── next.config.mjs         # Next.js configuration
 └── package.json            # Dependencies and scripts
@@ -143,6 +148,29 @@ portfolio/
 - **Coverage Reporting**: Track test coverage with visual indicators
 - **Quality Gates**: No failing tests can reach production
 - **GitHub Actions**: Automated testing, building, and deployment
+
+## ⚙️ Configuration Management
+
+All configuration files are organized in the `/config` directory for better maintainability:
+
+### 📁 Config Structure
+
+```
+config/
+├── jest/                   # Testing configuration
+│   ├── jest.config.cjs          # Main Jest config (70% coverage)
+│   ├── jest.config.ci.cjs       # CI config (40% coverage)
+│   └── jest.setup.cjs           # Test setup & mocks
+├── eslint.config.js        # ESLint 9.x flat config
+└── prettier.config.js      # Code formatting rules
+```
+
+### 🔧 Benefits of Organized Configs
+
+- **Clean Root Directory**: Less clutter in project root
+- **Logical Grouping**: Related configs are grouped together
+- **Enterprise Pattern**: Follows modern project organization standards
+- **Easy Maintenance**: Configs are easy to find and update
 
 ## 🚀 Deployment
 
