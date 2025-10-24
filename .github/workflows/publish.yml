@@ -63,17 +63,27 @@ jobs:
       - name: Run Jest tests 🧪
         id: jest
         run: npm run test:ci
+        continue-on-error: true
 
       - name: Comment PR with test results 💬
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && always()
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
 
+            // Check if tests failed by looking at the jest step outcome
+            const testsFailed = '${{ steps.jest.outcome }}' === 'failure';
+
             // Read test results
             let testSummary = `## 🧪 Jest Test Results\n\n`;
-            testSummary += '✅ **All tests passed successfully!**\n\n';
+
+            if (testsFailed) {
+              testSummary += '❌ **Tests Failed**\n\n';
+              testSummary += 'Some tests did not pass. Please check the [workflow logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.\n\n';
+            } else {
+              testSummary += '✅ **All tests passed successfully!**\n\n';
+            }
 
             try {
               // Check if coverage summary exists
@@ -104,13 +114,20 @@ jobs:
                 testSummary += 'Current thresholds for CI: **40%** for all metrics\n\n';
               }
               
-              testSummary += '🎉 **Ready to merge!** All quality checks passed.\n\n';
+              if (!testsFailed) {
+                testSummary += '🎉 **Ready to merge!** All quality checks passed.\n\n';
+              } else {
+                testSummary += '🔧 **Action required:** Please fix failing tests before merging.\n\n';
+              }
+              
               testSummary += `📋 **Full Details**: [View workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n`;
               testSummary += `📊 **Coverage Report**: Available in Actions artifacts`;
               
             } catch (error) {
               testSummary += '⚠️ Could not read detailed coverage summary.\n\n';
-              testSummary += '✅ **Tests completed successfully.**';
+              if (!testsFailed) {
+                testSummary += '✅ **Tests completed successfully.**';
+              }
             }
 
             // Find existing comment
@@ -149,6 +166,10 @@ jobs:
           name: test-coverage-${{ github.run_number }}
           path: coverage/
           retention-days: 30
+
+      - name: Fail job if tests failed 💥
+        if: steps.jest.outcome == 'failure'
+        run: exit 1
 
   build:
     name: Build & Deploy
