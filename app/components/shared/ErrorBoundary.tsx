@@ -1,5 +1,6 @@
 "use client";
 
+import { isDevelopment } from "@/app/utils/env";
 import { Component, ErrorInfo, ReactNode } from "react";
 import styled from "styled-components";
 
@@ -115,7 +116,7 @@ class ErrorBoundary extends Component<Props, State> {
           </ErrorMessage>
           <RetryButton onClick={this.handleRetry}>Try Again</RetryButton>
 
-          {process.env.NODE_ENV === "development" && this.state.error && (
+          {isDevelopment() && this.state.error && (
             <ErrorDetails>
               <summary>Error Details (Development Only)</summary>
               <pre>
