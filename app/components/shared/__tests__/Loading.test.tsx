@@ -14,7 +14,7 @@ describe("Loading Components", () => {
       render(
         <TestWrapper>
           <LoadingSpinner />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       expect(screen.getByText("Loading...")).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe("Loading Components", () => {
       render(
         <TestWrapper>
           <LoadingSpinner message={customMessage} />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       expect(screen.getByText(customMessage)).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe("Loading Components", () => {
       render(
         <TestWrapper>
           <LoadingSpinner />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const loadingElement = screen.getByRole("status");
@@ -49,7 +49,7 @@ describe("Loading Components", () => {
       render(
         <TestWrapper>
           <SkeletonLoader />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       // Default is 3 lines
@@ -62,7 +62,7 @@ describe("Loading Components", () => {
       render(
         <TestWrapper>
           <SkeletonLoader lines={customLines} />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const skeletonLines = screen.getAllByTestId(/skeleton-line-\d+/);
@@ -73,13 +73,13 @@ describe("Loading Components", () => {
       render(
         <TestWrapper>
           <SkeletonLoader />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const container = screen.getByRole("status");
       expect(container).toHaveAttribute(
         "aria-label",
-        "Loading content skeleton"
+        "Loading content skeleton",
       );
     });
   });
@@ -89,7 +89,7 @@ describe("Loading Components", () => {
       render(
         <TestWrapper>
           <SuspenseFallback />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       expect(screen.getByText("Loading content...")).toBeInTheDocument();

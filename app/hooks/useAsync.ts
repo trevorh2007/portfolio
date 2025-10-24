@@ -10,7 +10,7 @@ interface AsyncState<T> {
 
 export function useAsync<T>(
   asyncFunction: () => Promise<T>,
-  dependencies: React.DependencyList = []
+  dependencies: React.DependencyList = [],
 ): AsyncState<T> & { refetch: () => void } {
   const [state, setState] = useState<AsyncState<T>>({
     data: null,
@@ -19,7 +19,7 @@ export function useAsync<T>(
   });
 
   const execute = useCallback(async () => {
-    setState(prev => ({ ...prev, loading: true, error: null }));
+    setState((prev) => ({ ...prev, loading: true, error: null }));
 
     try {
       const result = await asyncFunction();
@@ -69,7 +69,7 @@ export function useLoading(initialState = false): LoadingState {
         setIsLoading(false);
       }
     },
-    []
+    [],
   );
 
   return { isLoading, startLoading, stopLoading, withLoading };

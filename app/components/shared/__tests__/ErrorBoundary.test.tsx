@@ -33,7 +33,7 @@ describe("ErrorBoundary", () => {
         <ErrorBoundary>
           <ThrowError shouldThrow={false} />
         </ErrorBoundary>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(screen.getByText("No error")).toBeInTheDocument();
@@ -45,17 +45,17 @@ describe("ErrorBoundary", () => {
         <ErrorBoundary>
           <ThrowError shouldThrow />
         </ErrorBoundary>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(screen.getByText("Oops! Something went wrong")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists."
-      )
+        "We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists.",
+      ),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Try Again" })
+      screen.getByRole("button", { name: "Try Again" }),
     ).toBeInTheDocument();
   });
 
@@ -67,12 +67,12 @@ describe("ErrorBoundary", () => {
         <ErrorBoundary fallback={customFallback}>
           <ThrowError shouldThrow />
         </ErrorBoundary>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(screen.getByText("Custom error message")).toBeInTheDocument();
     expect(
-      screen.queryByText("Oops! Something went wrong")
+      screen.queryByText("Oops! Something went wrong"),
     ).not.toBeInTheDocument();
   });
 
@@ -91,7 +91,7 @@ describe("ErrorBoundary", () => {
         <ErrorBoundary>
           <TestComponent />
         </ErrorBoundary>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     // Error should be displayed
