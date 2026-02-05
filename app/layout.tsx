@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import ErrorBoundary from "./components/shared/ErrorBoundary";
-import NavBar from "./components/shared/navbar";
+import Header from "./components/shared/Header";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function RootLayout(props: React.PropsWithChildren) {
       <body className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
         <Providers>
           <ErrorBoundary>
-            <NavBar />
+            <Header />
             {props.children}
           </ErrorBoundary>
         </Providers>
