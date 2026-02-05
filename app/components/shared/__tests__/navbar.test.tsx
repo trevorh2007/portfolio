@@ -45,7 +45,6 @@ describe("NavBar", () => {
     expect(screen.getAllByText("Home")).toHaveLength(2); // Desktop + mobile
     expect(screen.getAllByText("Projects")).toHaveLength(2);
     expect(screen.getAllByText("Contact")).toHaveLength(2);
-    expect(screen.getAllByText("Timer")).toHaveLength(2);
   });
 
   it("calls setDarkMode when theme toggle button is clicked", () => {

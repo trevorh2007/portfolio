@@ -5,6 +5,6 @@ describe("Contact Page", () => {
   it("renders the contact page", () => {
     render(<Contact />);
 
-    expect(screen.getByText("Contact page")).toBeInTheDocument();
+    expect(screen.getByText("Coming Soon")).toBeInTheDocument();
   });
 });
