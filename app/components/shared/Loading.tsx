@@ -1,79 +1,6 @@
 "use client";
 
 import React from "react";
-import styled, { keyframes } from "styled-components";
-
-const spin = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
-
-const pulse = keyframes`
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-`;
-
-const LoadingContainer = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "fullScreen",
-})<{ fullScreen?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  ${({ fullScreen, theme }) =>
-    fullScreen &&
-    `
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: ${theme.colors.background};
-    z-index: 9999;
-  `}
-  ${({ fullScreen }) =>
-    !fullScreen &&
-    `
-    min-height: 200px;
-  `}
-`;
-
-const Spinner = styled.div`
-  border: 4px solid ${({ theme }) => theme.colors.backgroundLight};
-  border-top: 4px solid ${({ theme }) => theme.colors.primary};
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: ${spin} 1s linear infinite;
-`;
-
-const LoadingText = styled.p`
-  margin-top: 1rem;
-  color: ${({ theme }) => theme.colors.text};
-  font-size: 1rem;
-  animation: ${pulse} 1.5s ease-in-out infinite;
-`;
-
-const SkeletonContainer = styled.div`
-  width: 100%;
-  max-width: 600px;
-`;
-
-const SkeletonLine = styled.div<{ width?: string; height?: string }>`
-  background: linear-gradient(
-    90deg,
-    ${({ theme }) => theme.colors.backgroundLight} 25%,
-    ${({ theme }) => theme.colors.background} 50%,
-    ${({ theme }) => theme.colors.backgroundLight} 75%
-  );
-  background-size: 200% 100%;
-  animation: ${pulse} 1.5s ease-in-out infinite;
-  border-radius: 4px;
-  height: ${({ height = "1rem" }) => height};
-  width: ${({ width = "100%" }) => width};
-  margin-bottom: 0.75rem;
-`;
 
 interface LoadingSpinnerProps {
   message?: string;
@@ -84,14 +11,20 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   message = "Loading...",
   fullScreen = false,
 }) => (
-  <LoadingContainer
-    fullScreen={fullScreen}
+  <div
+    className={`flex flex-col items-center justify-center p-8 ${
+      fullScreen
+        ? "fixed inset-0 bg-white dark:bg-gray-800 z-[9999]"
+        : "min-h-[200px]"
+    }`}
     role="status"
     aria-label="Loading content"
   >
-    <Spinner />
-    <LoadingText>{message}</LoadingText>
-  </LoadingContainer>
+    <div className="w-10 h-10 border-4 border-gray-200 dark:border-gray-700 border-t-blue-500 rounded-full animate-spin" />
+    <p className="mt-4 text-gray-900 dark:text-gray-100 animate-pulse">
+      {message}
+    </p>
+  </div>
 );
 
 interface SkeletonLoaderProps {
@@ -103,32 +36,34 @@ export const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
   lines = 3,
   avatar = false,
 }) => (
-  <SkeletonContainer role="status" aria-label="Loading content skeleton">
+  <div
+    className="w-full max-w-2xl"
+    role="status"
+    aria-label="Loading content skeleton"
+  >
     {avatar && (
-      <div
-        style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}
-      >
-        <SkeletonLine
-          width="60px"
-          height="60px"
-          style={{ borderRadius: "50%", marginRight: "1rem", marginBottom: 0 }}
-        />
-        <div style={{ flex: 1 }}>
-          <SkeletonLine width="40%" height="1.25rem" />
-          <SkeletonLine width="60%" height="1rem" />
+      <div className="flex items-center mb-4">
+        <div className="w-15 h-15 rounded-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 animate-pulse mr-4" />
+        <div className="flex-1">
+          <div className="h-5 w-2/5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded animate-pulse mb-2" />
+          <div className="h-4 w-3/5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded animate-pulse" />
         </div>
       </div>
     )}
     {Array.from({ length: lines }, (_, i) => (
-      <SkeletonLine
+      <div
         key={i}
         data-testid={`skeleton-line-${i}`}
-        width={
-          i === lines - 1 && lines > 1 ? `${Math.random() * 40 + 40}%` : "100%"
-        }
+        className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded animate-pulse mb-3"
+        style={{
+          width:
+            i === lines - 1 && lines > 1
+              ? `${Math.random() * 40 + 40}%`
+              : "100%",
+        }}
       />
     ))}
-  </SkeletonContainer>
+  </div>
 );
 
 interface SuspenseFallbackProps {

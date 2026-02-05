@@ -1,4 +1,3 @@
-import { lightTheme } from "@/app/styles/themes";
 import {
   act,
   fireEvent,
@@ -6,7 +5,6 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import { ThemeProvider } from "styled-components";
 import Timer from "../page";
 
 // Mock the components
@@ -48,11 +46,6 @@ afterAll(() => {
   console.error = originalError;
 });
 
-// Test wrapper with theme
-const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <ThemeProvider theme={lightTheme}>{children}</ThemeProvider>
-);
-
 describe("Timer Page", () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -64,31 +57,19 @@ describe("Timer Page", () => {
   });
 
   it("renders the timer input initially", () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     expect(screen.getByPlaceholderText("Enter seconds...")).toBeInTheDocument();
   });
 
   it("renders start button initially", () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     expect(screen.getByText("Start Timer")).toBeInTheDocument();
   });
 
   it("shows error for invalid input (NaN)", async () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     const input = screen.getByPlaceholderText(
       "Enter seconds...",
@@ -110,11 +91,7 @@ describe("Timer Page", () => {
   });
 
   it("shows error for negative number", async () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     const input = screen.getByPlaceholderText("Enter seconds...");
     fireEvent.change(input, { target: { value: "-5" } });
@@ -127,11 +104,7 @@ describe("Timer Page", () => {
   });
 
   it("shows error for zero", async () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     const input = screen.getByPlaceholderText("Enter seconds...");
     fireEvent.change(input, { target: { value: "0" } });
@@ -144,11 +117,7 @@ describe("Timer Page", () => {
   });
 
   it("shows error for input exceeding 24 hours", async () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     const input = screen.getByPlaceholderText("Enter seconds...");
     fireEvent.change(input, { target: { value: "86401" } });
@@ -161,11 +130,7 @@ describe("Timer Page", () => {
   });
 
   it("accepts valid input and clears error", async () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     const input = screen.getByPlaceholderText(
       "Enter seconds...",
@@ -186,11 +151,7 @@ describe("Timer Page", () => {
   });
 
   it("shows loading spinner while setting up timer", async () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     const input = screen.getByPlaceholderText("Enter seconds...");
 
@@ -203,11 +164,7 @@ describe("Timer Page", () => {
   });
 
   it("starts timer when start button is clicked", async () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     const input = screen.getByPlaceholderText("Enter seconds...");
 
@@ -234,11 +191,7 @@ describe("Timer Page", () => {
   });
 
   it("hides start button when there is an error", async () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     const input = screen.getByPlaceholderText(
       "Enter seconds...",
@@ -254,11 +207,7 @@ describe("Timer Page", () => {
   });
 
   it("resets timer when reset button in TimerComponent is clicked", async () => {
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     const input = screen.getByPlaceholderText("Enter seconds...");
 
@@ -303,11 +252,7 @@ describe("Timer Page", () => {
       configurable: true,
     });
 
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     // This would be difficult to trigger naturally, but we can verify the component handles it
     // For now, verify the component renders properly
@@ -330,11 +275,7 @@ describe("Timer Page", () => {
       configurable: true,
     });
 
-    render(
-      <TestWrapper>
-        <Timer />
-      </TestWrapper>,
-    );
+    render(<Timer />);
 
     // Enter valid time
     await act(async () => {

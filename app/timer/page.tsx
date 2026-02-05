@@ -1,38 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import styled from "styled-components";
 
 import ErrorBoundary from "../components/shared/ErrorBoundary";
 import { LoadingSpinner } from "../components/shared/Loading";
 import { useLoading } from "../hooks/useAsync";
 import TimerComponent from "./CountdownTimer";
-
-const TimerWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 50px 0;
-  width: 100%;
-
-  input {
-    height: 50px;
-    font-size: 36px;
-  }
-
-  button {
-    background-color: #e3e3e3;
-    margin-left: 25px;
-    height: 50px;
-    width: 150px;
-  }
-`;
-
-const ErrorMessage = styled.div`
-  color: #ef4444;
-  margin-left: 1rem;
-  font-size: 0.875rem;
-`;
 
 const Timer = () => {
   const [userTime, setUserTime] = useState<Date>(new Date());
@@ -96,7 +69,7 @@ const Timer = () => {
 
   return (
     <ErrorBoundary>
-      <TimerWrapper>
+      <div className="flex justify-center items-center py-12 w-full gap-6 flex-wrap">
         {!resetTimer ? (
           <>
             <input
@@ -105,8 +78,11 @@ const Timer = () => {
               type="number"
               min="1"
               max="86400"
+              className="h-12 text-4xl px-4 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {inputError && <ErrorMessage>{inputError}</ErrorMessage>}
+            {inputError && (
+              <div className="text-red-500 ml-4 text-sm">{inputError}</div>
+            )}
           </>
         ) : (
           <></>
@@ -117,13 +93,17 @@ const Timer = () => {
           <></>
         )}
         {!resetTimer && !inputError ? (
-          <button onClick={handleStartTimer} disabled={isLoading}>
+          <button
+            onClick={handleStartTimer}
+            disabled={isLoading}
+            className="bg-gray-200 dark:bg-gray-700 ml-6 h-12 w-36 rounded-lg text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
             {isLoading ? "Starting..." : "Start Timer"}
           </button>
         ) : (
           <></>
         )}
-      </TimerWrapper>
+      </div>
     </ErrorBoundary>
   );
 };

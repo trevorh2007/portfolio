@@ -2,22 +2,6 @@
 
 import React, { FC } from "react";
 import { useTimer } from "react-timer-hook";
-import styled from "styled-components";
-
-const TimerInfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-`;
 
 const TimerComponent: FC<TimerProps> = (props): JSX.Element => {
   const { seconds, minutes, hours, days, pause, resume } = useTimer({
@@ -34,19 +18,34 @@ const TimerComponent: FC<TimerProps> = (props): JSX.Element => {
   });
 
   return (
-    <TimerInfoWrapper>
-      <h1>
+    <div className="flex flex-col justify-center items-center w-full">
+      <h1 className="text-3xl font-bold mb-6">
         {days !== 0 ? `${days.toString().padStart(2, "0")}h ` : ""}
         {hours !== 0 ? `${hours.toString().padStart(2, "0")}h ` : ""}
         {minutes !== 0 ? `${minutes.toString().padStart(2, "0")}m ` : ""}
         {seconds} seconds remaining
       </h1>
-      <ButtonGroup>
-        <button onClick={() => pause()}>Pause Timer</button>
-        <button onClick={() => resume()}>Resume Timer</button>
-        <button onClick={() => props.setResetTimer(false)}>Reset Timer</button>
-      </ButtonGroup>
-    </TimerInfoWrapper>
+      <div className="flex gap-4 w-full justify-center items-center">
+        <button
+          onClick={() => pause()}
+          className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+        >
+          Pause Timer
+        </button>
+        <button
+          onClick={() => resume()}
+          className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
+        >
+          Resume Timer
+        </button>
+        <button
+          onClick={() => props.setResetTimer(false)}
+          className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+        >
+          Reset Timer
+        </button>
+      </div>
+    </div>
   );
 };
 

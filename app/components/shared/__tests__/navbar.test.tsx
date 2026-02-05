@@ -1,6 +1,4 @@
-import { lightTheme } from "@/app/styles/themes";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ThemeProvider } from "styled-components";
 import NavBar from "../navbar";
 
 // Mock Next.js Link component
@@ -18,17 +16,12 @@ jest.mock("next/link", () => {
 
 // Mock the dark mode context
 const mockSetDarkMode = jest.fn();
-jest.mock("@/app/styles/Providers", () => ({
+jest.mock("@/app/providers", () => ({
   useDarkModeContext: () => ({
     darkMode: false,
     setDarkMode: mockSetDarkMode,
   }),
 }));
-
-// Test wrapper with theme
-const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <ThemeProvider theme={lightTheme}>{children}</ThemeProvider>
-);
 
 describe("NavBar", () => {
   beforeEach(() => {
@@ -36,11 +29,7 @@ describe("NavBar", () => {
   });
 
   it("renders all navigation links", () => {
-    render(
-      <TestWrapper>
-        <NavBar />
-      </TestWrapper>,
-    );
+    render(<NavBar />);
 
     expect(screen.getByText("Home")).toBeInTheDocument();
     expect(screen.getByText("Contact page")).toBeInTheDocument();
@@ -48,21 +37,13 @@ describe("NavBar", () => {
   });
 
   it("renders theme toggle button with correct text", () => {
-    render(
-      <TestWrapper>
-        <NavBar />
-      </TestWrapper>,
-    );
+    render(<NavBar />);
 
     expect(screen.getByText("Turn off the lights")).toBeInTheDocument();
   });
 
   it("calls setDarkMode when theme toggle button is clicked", () => {
-    render(
-      <TestWrapper>
-        <NavBar />
-      </TestWrapper>,
-    );
+    render(<NavBar />);
 
     const button = screen.getByRole("button", { name: "Turn off the lights" });
     fireEvent.click(button);
@@ -72,11 +53,7 @@ describe("NavBar", () => {
   });
 
   it("has correct href attributes for links", () => {
-    render(
-      <TestWrapper>
-        <NavBar />
-      </TestWrapper>,
-    );
+    render(<NavBar />);
 
     const homeLink = screen.getByText("Home").closest("a");
     const contactLink = screen.getByText("Contact page").closest("a");
@@ -93,7 +70,7 @@ describe("NavBar with dark mode enabled", () => {
     mockSetDarkMode.mockClear();
     // Re-mock with dark mode enabled
     jest.resetModules();
-    jest.mock("@/app/styles/Providers", () => ({
+    jest.mock("@/app/providers", () => ({
       useDarkModeContext: () => ({
         darkMode: true,
         setDarkMode: mockSetDarkMode,
@@ -111,17 +88,13 @@ describe("NavBar with dark mode enabled", () => {
 
       // We'll test by checking if the button toggles correctly
       return (
-        <TestWrapper>
-          <button
-            onClick={() =>
-              mockDarkContext.setDarkMode(!mockDarkContext.darkMode)
-            }
-          >
-            {mockDarkContext.darkMode
-              ? "Turn on the Lights"
-              : "Turn off the lights"}
-          </button>
-        </TestWrapper>
+        <button
+          onClick={() => mockDarkContext.setDarkMode(!mockDarkContext.darkMode)}
+        >
+          {mockDarkContext.darkMode
+            ? "Turn on the Lights"
+            : "Turn off the lights"}
+        </button>
       );
     };
 
