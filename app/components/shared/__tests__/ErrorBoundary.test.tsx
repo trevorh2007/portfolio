@@ -3,6 +3,11 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
 import ErrorBoundary from "../ErrorBoundary";
 
+// Mock the isDevelopment utility
+jest.mock("@/app/utils/env", () => ({
+  isDevelopment: jest.fn(() => false),
+}));
+
 // Test wrapper with theme
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <ThemeProvider theme={lightTheme}>{children}</ThemeProvider>
@@ -105,5 +110,50 @@ describe("ErrorBoundary", () => {
 
     // Component should render successfully now
     expect(screen.getByText("No error")).toBeInTheDocument();
+  });
+
+  it("logs error in production mode", () => {
+    const originalEnv = process.env.NODE_ENV;
+    Object.defineProperty(process.env, "NODE_ENV", {
+      value: "production",
+      configurable: true,
+    });
+
+    const mockConsoleError = jest.fn();
+    console.error = mockConsoleError;
+
+    render(
+      <TestWrapper>
+        <ErrorBoundary>
+          <ThrowError shouldThrow />
+        </ErrorBoundary>
+      </TestWrapper>,
+    );
+
+    expect(mockConsoleError).toHaveBeenCalled();
+    Object.defineProperty(process.env, "NODE_ENV", {
+      value: originalEnv,
+      configurable: true,
+    });
+  });
+
+  it("displays error details in development mode", () => {
+    // Mock isDevelopment to return true
+    const { isDevelopment } = require("@/app/utils/env");
+    isDevelopment.mockReturnValue(true);
+
+    render(
+      <TestWrapper>
+        <ErrorBoundary>
+          <ThrowError shouldThrow />
+        </ErrorBoundary>
+      </TestWrapper>,
+    );
+
+    const details = screen.getByText("Error Details (Development Only)");
+    expect(details).toBeInTheDocument();
+
+    // Reset mock
+    isDevelopment.mockReturnValue(false);
   });
 });

@@ -42,6 +42,17 @@ describe("Loading Components", () => {
       const loadingElement = screen.getByRole("status");
       expect(loadingElement).toHaveAttribute("aria-label", "Loading content");
     });
+
+    it("renders in fullScreen mode", () => {
+      render(
+        <TestWrapper>
+          <LoadingSpinner fullScreen />
+        </TestWrapper>,
+      );
+
+      const loadingElement = screen.getByRole("status");
+      expect(loadingElement).toBeInTheDocument();
+    });
   });
 
   describe("SkeletonLoader", () => {
@@ -82,6 +93,17 @@ describe("Loading Components", () => {
         "Loading content skeleton",
       );
     });
+
+    it("renders with avatar when requested", () => {
+      render(
+        <TestWrapper>
+          <SkeletonLoader avatar />
+        </TestWrapper>,
+      );
+
+      const container = screen.getByRole("status");
+      expect(container).toBeInTheDocument();
+    });
   });
 
   describe("SuspenseFallback", () => {
@@ -94,6 +116,39 @@ describe("Loading Components", () => {
 
       expect(screen.getByText("Loading content...")).toBeInTheDocument();
       expect(screen.getByRole("status")).toBeInTheDocument();
+    });
+
+    it("renders skeleton type when specified", () => {
+      render(
+        <TestWrapper>
+          <SuspenseFallback type="skeleton" />
+        </TestWrapper>,
+      );
+
+      const skeletonLines = screen.getAllByTestId(/skeleton-line-\d+/);
+      expect(skeletonLines.length).toBeGreaterThan(0);
+    });
+
+    it("renders skeleton with custom lines", () => {
+      render(
+        <TestWrapper>
+          <SuspenseFallback type="skeleton" lines={5} />
+        </TestWrapper>,
+      );
+
+      const skeletonLines = screen.getAllByTestId(/skeleton-line-\d+/);
+      expect(skeletonLines).toHaveLength(5);
+    });
+
+    it("renders skeleton with avatar", () => {
+      render(
+        <TestWrapper>
+          <SuspenseFallback type="skeleton" avatar />
+        </TestWrapper>,
+      );
+
+      const container = screen.getByRole("status");
+      expect(container).toBeInTheDocument();
     });
   });
 });
