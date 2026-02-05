@@ -1,23 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import NavBar from "../navbar";
-
-// Mock Next.js Link component
-jest.mock("next/link", () => {
-  return function Link({
-    children,
-    href,
-  }: {
-    children: React.ReactNode;
-    href: string;
-  }) {
-    return <a href={href}>{children}</a>;
-  };
-});
-
-// Mock Next.js usePathname
-jest.mock("next/navigation", () => ({
-  usePathname: jest.fn(() => "/"),
-}));
+import Header from "../Header";
 
 // Mock the dark mode context
 const mockSetDarkMode = jest.fn();
@@ -30,7 +12,7 @@ jest.mock("@/app/providers", () => ({
   useDarkModeContext: () => mockUseDarkModeContext(),
 }));
 
-describe("NavBar", () => {
+describe("Header", () => {
   beforeEach(() => {
     mockSetDarkMode.mockClear();
     mockUseDarkModeContext.mockReturnValue({
@@ -39,15 +21,14 @@ describe("NavBar", () => {
     });
   });
 
-  it("renders all navigation links", () => {
-    render(<NavBar />);
+  it("renders the portfolio title", () => {
+    render(<Header />);
 
-    expect(screen.getAllByText("Home")).toHaveLength(2); // Desktop + mobile
-    expect(screen.getAllByText("Projects")).toHaveLength(2);
+    expect(screen.getByText("Trevor's Portfolio")).toBeInTheDocument();
   });
 
   it("calls setDarkMode when theme toggle button is clicked", () => {
-    render(<NavBar />);
+    render(<Header />);
 
     const button = screen.getByRole("button", { name: "Toggle dark mode" });
     fireEvent.click(button);
@@ -55,34 +36,12 @@ describe("NavBar", () => {
     expect(mockSetDarkMode).toHaveBeenCalledWith(true);
   });
 
-  it("toggles mobile menu when hamburger button is clicked", () => {
-    render(<NavBar />);
-
-    const menuButton = screen.getByRole("button", { name: "Toggle menu" });
-    fireEvent.click(menuButton);
-    fireEvent.click(menuButton);
-
-    expect(menuButton).toBeInTheDocument();
-  });
-
-  it("closes mobile menu when a link is clicked", () => {
-    render(<NavBar />);
-
-    const menuButton = screen.getByRole("button", { name: "Toggle menu" });
-    fireEvent.click(menuButton);
-
-    const mobileHomeLink = screen.getAllByText("Home")[1];
-    fireEvent.click(mobileHomeLink!);
-
-    expect(mobileHomeLink).toBeInTheDocument();
-  });
-
   it("handles null context with fallback values", () => {
     mockUseDarkModeContext.mockReturnValueOnce(
       null as unknown as { darkMode: boolean; setDarkMode: jest.Mock },
     );
 
-    render(<NavBar />);
+    render(<Header />);
 
     const darkModeButton = screen.getByRole("button", {
       name: "Toggle dark mode",
@@ -98,7 +57,7 @@ describe("NavBar", () => {
       setDarkMode: mockSetDarkMode,
     });
 
-    render(<NavBar />);
+    render(<Header />);
 
     const darkModeButton = screen.getByRole("button", {
       name: "Toggle dark mode",
@@ -112,7 +71,7 @@ describe("NavBar", () => {
   });
 
   it("renders moon icon when dark mode is disabled", () => {
-    render(<NavBar />);
+    render(<Header />);
 
     const darkModeButton = screen.getByRole("button", {
       name: "Toggle dark mode",
@@ -121,20 +80,5 @@ describe("NavBar", () => {
     const paths = svgElement?.querySelectorAll("path");
 
     expect(paths?.length).toBe(1);
-  });
-
-  it("handles mouse hover events on navigation links", () => {
-    const { container } = render(<NavBar />);
-
-    const projectsLink = screen.getAllByText("Projects")[0];
-    const navContainer = container.querySelector(".hidden.md\\:flex");
-
-    fireEvent.mouseEnter(projectsLink!);
-
-    if (navContainer) {
-      fireEvent.mouseLeave(navContainer);
-    }
-
-    expect(projectsLink).toBeInTheDocument();
   });
 });

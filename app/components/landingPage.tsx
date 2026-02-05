@@ -1,6 +1,7 @@
 "use client";
 
 import Contact from "./Contact";
+import Projects from "./Projects";
 import SkillCard from "./SkillCard";
 
 const LandingPage = () => {
@@ -32,7 +33,7 @@ const LandingPage = () => {
           {/* CTA Buttons */}
           <div className="flex flex-wrap items-center justify-center">
             <a
-              href="/projects"
+              href="#projects"
               className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
             >
               View My Work
@@ -157,6 +158,7 @@ const LandingPage = () => {
         </div>
       </section>
 
+      <Projects />
       <Contact />
     </div>
   );
