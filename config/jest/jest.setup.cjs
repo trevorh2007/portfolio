@@ -20,8 +20,8 @@ jest.mock("next/navigation", () => ({
   },
 }));
 
-// Mock styled-components theme
-jest.mock("@/app/styles/Providers", () => ({
+// Mock dark mode context (migrated from styled-components to Tailwind)
+jest.mock("@/app/providers", () => ({
   useDarkModeContext: () => ({
     darkMode: false,
     setDarkMode: jest.fn(),

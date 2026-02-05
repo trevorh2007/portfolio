@@ -1,6 +1,4 @@
-import { lightTheme } from "@/app/styles/themes";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ThemeProvider } from "styled-components";
 import TimerComponent from "../CountdownTimer";
 
 // Mock react-timer-hook
@@ -28,11 +26,6 @@ afterAll(() => {
   console.warn = originalWarn;
 });
 
-// Test wrapper with theme
-const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <ThemeProvider theme={lightTheme}>{children}</ThemeProvider>
-);
-
 describe("CountdownTimer", () => {
   const mockSetResetTimer = jest.fn();
   const mockUserTime = new Date();
@@ -45,12 +38,10 @@ describe("CountdownTimer", () => {
 
   it("renders the timer with time remaining", () => {
     render(
-      <TestWrapper>
-        <TimerComponent
-          userTime={mockUserTime}
-          setResetTimer={mockSetResetTimer}
-        />
-      </TestWrapper>,
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
     );
 
     expect(screen.getByText(/seconds remaining/i)).toBeInTheDocument();
@@ -58,12 +49,10 @@ describe("CountdownTimer", () => {
 
   it("displays hours, minutes and seconds", () => {
     render(
-      <TestWrapper>
-        <TimerComponent
-          userTime={mockUserTime}
-          setResetTimer={mockSetResetTimer}
-        />
-      </TestWrapper>,
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
     );
 
     const timerText = screen.getByRole("heading");
@@ -72,12 +61,10 @@ describe("CountdownTimer", () => {
 
   it("renders pause button", () => {
     render(
-      <TestWrapper>
-        <TimerComponent
-          userTime={mockUserTime}
-          setResetTimer={mockSetResetTimer}
-        />
-      </TestWrapper>,
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
     );
 
     expect(screen.getByText("Pause Timer")).toBeInTheDocument();
@@ -85,12 +72,10 @@ describe("CountdownTimer", () => {
 
   it("renders resume button", () => {
     render(
-      <TestWrapper>
-        <TimerComponent
-          userTime={mockUserTime}
-          setResetTimer={mockSetResetTimer}
-        />
-      </TestWrapper>,
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
     );
 
     expect(screen.getByText("Resume Timer")).toBeInTheDocument();
@@ -98,12 +83,10 @@ describe("CountdownTimer", () => {
 
   it("renders reset button", () => {
     render(
-      <TestWrapper>
-        <TimerComponent
-          userTime={mockUserTime}
-          setResetTimer={mockSetResetTimer}
-        />
-      </TestWrapper>,
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
     );
 
     expect(screen.getByText("Reset Timer")).toBeInTheDocument();
@@ -111,12 +94,10 @@ describe("CountdownTimer", () => {
 
   it("calls pause when pause button is clicked", () => {
     render(
-      <TestWrapper>
-        <TimerComponent
-          userTime={mockUserTime}
-          setResetTimer={mockSetResetTimer}
-        />
-      </TestWrapper>,
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
     );
 
     const pauseButton = screen.getByText("Pause Timer");
@@ -127,12 +108,10 @@ describe("CountdownTimer", () => {
 
   it("calls resume when resume button is clicked", () => {
     render(
-      <TestWrapper>
-        <TimerComponent
-          userTime={mockUserTime}
-          setResetTimer={mockSetResetTimer}
-        />
-      </TestWrapper>,
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
     );
 
     const resumeButton = screen.getByText("Resume Timer");
@@ -143,12 +122,10 @@ describe("CountdownTimer", () => {
 
   it("calls setResetTimer with false when reset button is clicked", () => {
     render(
-      <TestWrapper>
-        <TimerComponent
-          userTime={mockUserTime}
-          setResetTimer={mockSetResetTimer}
-        />
-      </TestWrapper>,
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
     );
 
     const resetButton = screen.getByText("Reset Timer");
@@ -179,12 +156,10 @@ describe("CountdownTimer time display", () => {
     // This test would need a proper re-render with updated mock
     // For now we verify the component renders
     render(
-      <ThemeProvider theme={lightTheme}>
-        <TimerComponent
-          userTime={mockUserTime}
-          setResetTimer={mockSetResetTimer}
-        />
-      </ThemeProvider>,
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
     );
 
     expect(screen.getByRole("heading")).toBeInTheDocument();

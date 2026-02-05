@@ -1,13 +1,5 @@
-import { lightTheme } from "@/app/styles/themes";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import React from "react";
-import { ThemeProvider } from "styled-components";
 import ErrorPage from "../error";
-
-// Test wrapper with theme
-const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <ThemeProvider theme={lightTheme}>{children}</ThemeProvider>
-);
 
 // Mock console.error to avoid noise in tests
 const originalError = console.error;
@@ -29,11 +21,7 @@ describe("Error Page", () => {
   });
 
   it("renders error page with title and message", () => {
-    render(
-      <TestWrapper>
-        <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
-    );
+    render(<ErrorPage error={mockError} reset={mockReset} />);
 
     expect(screen.getByText("Something went wrong!")).toBeInTheDocument();
     expect(
@@ -44,22 +32,14 @@ describe("Error Page", () => {
   });
 
   it("renders retry button", () => {
-    render(
-      <TestWrapper>
-        <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
-    );
+    render(<ErrorPage error={mockError} reset={mockReset} />);
 
     const button = screen.getByRole("button", { name: "Try Again" });
     expect(button).toBeInTheDocument();
   });
 
   it("calls reset function when retry button is clicked", () => {
-    render(
-      <TestWrapper>
-        <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
-    );
+    render(<ErrorPage error={mockError} reset={mockReset} />);
 
     const button = screen.getByRole("button", { name: "Try Again" });
     fireEvent.click(button);
@@ -74,11 +54,7 @@ describe("Error Page", () => {
       writable: true,
     });
 
-    render(
-      <TestWrapper>
-        <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
-    );
+    render(<ErrorPage error={mockError} reset={mockReset} />);
 
     // Wait for useEffect to run
     await waitFor(() => {
@@ -98,11 +74,7 @@ describe("Error Page", () => {
       writable: true,
     });
 
-    render(
-      <TestWrapper>
-        <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
-    );
+    render(<ErrorPage error={mockError} reset={mockReset} />);
 
     // Wait for useEffect to run
     await waitFor(() => {
@@ -119,11 +91,7 @@ describe("Error Page", () => {
     // In test environment, NODE_ENV is usually "test" which doesn't equal "development"
     // This test verifies the component structure is correct
     // The actual display depends on the build-time NODE_ENV value
-    render(
-      <TestWrapper>
-        <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
-    );
+    render(<ErrorPage error={mockError} reset={mockReset} />);
 
     // In test environment, the details won't show since NODE_ENV !== "development"
     // So we just verify the component renders correctly
@@ -131,11 +99,7 @@ describe("Error Page", () => {
   });
 
   it("does not display error details in non-development mode", () => {
-    render(
-      <TestWrapper>
-        <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
-    );
+    render(<ErrorPage error={mockError} reset={mockReset} />);
 
     // In test/production mode, error details should not be displayed
     const details = screen.queryByText("Error Details (Development Only)");
@@ -147,11 +111,7 @@ describe("Error Page", () => {
       digest: "abc123",
     });
 
-    render(
-      <TestWrapper>
-        <ErrorPage error={errorWithDigest} reset={mockReset} />
-      </TestWrapper>,
-    );
+    render(<ErrorPage error={errorWithDigest} reset={mockReset} />);
 
     expect(screen.getByText("Something went wrong!")).toBeInTheDocument();
   });

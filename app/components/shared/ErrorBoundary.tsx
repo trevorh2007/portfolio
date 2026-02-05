@@ -2,69 +2,6 @@
 
 import { isDevelopment } from "@/app/utils/env";
 import { Component, ErrorInfo, ReactNode } from "react";
-import styled from "styled-components";
-
-const ErrorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
-  padding: 2rem;
-  text-align: center;
-  background-color: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const ErrorTitle = styled.h2`
-  color: #ef4444;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-`;
-
-const ErrorMessage = styled.p`
-  margin-bottom: 1.5rem;
-  color: ${({ theme }) => theme.colors.text};
-  opacity: 0.8;
-`;
-
-const RetryButton = styled.button`
-  background-color: ${({ theme }) => theme.colors.buttonBackground};
-  color: ${({ theme }) => theme.colors.text};
-  border: 2px solid ${({ theme }) => theme.colors.border};
-  border-radius: 8px;
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.backgroundLight};
-  }
-`;
-
-const ErrorDetails = styled.details`
-  margin-top: 1rem;
-  padding: 1rem;
-  background-color: ${({ theme }) => theme.colors.backgroundLight};
-  border-radius: 8px;
-  max-width: 500px;
-
-  summary {
-    cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-
-  pre {
-    background-color: ${({ theme }) => theme.colors.background};
-    padding: 1rem;
-    border-radius: 4px;
-    overflow-x: auto;
-    font-size: 0.875rem;
-    white-space: pre-wrap;
-  }
-`;
 
 interface Props {
   children?: ReactNode;
@@ -108,24 +45,33 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <ErrorContainer>
-          <ErrorTitle>Oops! Something went wrong</ErrorTitle>
-          <ErrorMessage>
+        <div className="flex flex-col items-center justify-center min-h-[400px] p-8 text-center bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+          <h2 className="text-2xl font-semibold text-red-500 mb-4">
+            Oops! Something went wrong
+          </h2>
+          <p className="mb-6 opacity-80">
             We encountered an unexpected error. Please try refreshing the page
             or contact support if the problem persists.
-          </ErrorMessage>
-          <RetryButton onClick={this.handleRetry}>Try Again</RetryButton>
+          </p>
+          <button
+            onClick={this.handleRetry}
+            className="px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-2 border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer transition-all hover:bg-gray-300 dark:hover:bg-gray-600"
+          >
+            Try Again
+          </button>
 
           {isDevelopment() && this.state.error && (
-            <ErrorDetails>
-              <summary>Error Details (Development Only)</summary>
-              <pre>
+            <details className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg max-w-lg">
+              <summary className="cursor-pointer font-bold mb-2">
+                Error Details (Development Only)
+              </summary>
+              <pre className="bg-white dark:bg-gray-800 p-4 rounded overflow-x-auto text-sm whitespace-pre-wrap">
                 {this.state.error.toString()}
                 {this.state.errorInfo?.componentStack}
               </pre>
-            </ErrorDetails>
+            </details>
           )}
-        </ErrorContainer>
+        </div>
       );
     }
 

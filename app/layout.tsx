@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import "./globals.css";
 
 import ErrorBoundary from "./components/shared/ErrorBoundary";
 import NavBar from "./components/shared/navbar";
-import GlobalStyles from "./styles/GlobalStyles";
-import { Providers } from "./styles/Providers";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Trevors Portfolio",
@@ -13,9 +13,8 @@ export const metadata: Metadata = {
 export default function RootLayout(props: React.PropsWithChildren) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
         <Providers>
-          <GlobalStyles />
           <ErrorBoundary>
             <NavBar />
             {props.children}

@@ -1,17 +1,10 @@
-import { lightTheme } from "@/app/styles/themes";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ThemeProvider } from "styled-components";
 import ErrorBoundary from "../ErrorBoundary";
 
 // Mock the isDevelopment utility
 jest.mock("@/app/utils/env", () => ({
   isDevelopment: jest.fn(() => false),
 }));
-
-// Test wrapper with theme
-const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <ThemeProvider theme={lightTheme}>{children}</ThemeProvider>
-);
 
 // Component that throws an error
 const ThrowError = ({ shouldThrow }: { shouldThrow: boolean }) => {
@@ -34,11 +27,9 @@ afterAll(() => {
 describe("ErrorBoundary", () => {
   it("renders children when there is no error", () => {
     render(
-      <TestWrapper>
-        <ErrorBoundary>
-          <ThrowError shouldThrow={false} />
-        </ErrorBoundary>
-      </TestWrapper>,
+      <ErrorBoundary>
+        <ThrowError shouldThrow={false} />
+      </ErrorBoundary>,
     );
 
     expect(screen.getByText("No error")).toBeInTheDocument();
@@ -46,11 +37,9 @@ describe("ErrorBoundary", () => {
 
   it("displays error UI when child component throws", () => {
     render(
-      <TestWrapper>
-        <ErrorBoundary>
-          <ThrowError shouldThrow />
-        </ErrorBoundary>
-      </TestWrapper>,
+      <ErrorBoundary>
+        <ThrowError shouldThrow />
+      </ErrorBoundary>,
     );
 
     expect(screen.getByText("Oops! Something went wrong")).toBeInTheDocument();
@@ -68,11 +57,9 @@ describe("ErrorBoundary", () => {
     const customFallback = <div>Custom error message</div>;
 
     render(
-      <TestWrapper>
-        <ErrorBoundary fallback={customFallback}>
-          <ThrowError shouldThrow />
-        </ErrorBoundary>
-      </TestWrapper>,
+      <ErrorBoundary fallback={customFallback}>
+        <ThrowError shouldThrow />
+      </ErrorBoundary>,
     );
 
     expect(screen.getByText("Custom error message")).toBeInTheDocument();
@@ -92,11 +79,9 @@ describe("ErrorBoundary", () => {
     };
 
     render(
-      <TestWrapper>
-        <ErrorBoundary>
-          <TestComponent />
-        </ErrorBoundary>
-      </TestWrapper>,
+      <ErrorBoundary>
+        <TestComponent />
+      </ErrorBoundary>,
     );
 
     // Error should be displayed
@@ -123,11 +108,9 @@ describe("ErrorBoundary", () => {
     console.error = mockConsoleError;
 
     render(
-      <TestWrapper>
-        <ErrorBoundary>
-          <ThrowError shouldThrow />
-        </ErrorBoundary>
-      </TestWrapper>,
+      <ErrorBoundary>
+        <ThrowError shouldThrow />
+      </ErrorBoundary>,
     );
 
     expect(mockConsoleError).toHaveBeenCalled();
@@ -143,11 +126,9 @@ describe("ErrorBoundary", () => {
     isDevelopment.mockReturnValue(true);
 
     render(
-      <TestWrapper>
-        <ErrorBoundary>
-          <ThrowError shouldThrow />
-        </ErrorBoundary>
-      </TestWrapper>,
+      <ErrorBoundary>
+        <ThrowError shouldThrow />
+      </ErrorBoundary>,
     );
 
     const details = screen.getByText("Error Details (Development Only)");

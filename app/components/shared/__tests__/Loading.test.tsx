@@ -1,21 +1,10 @@
-import { lightTheme } from "@/app/styles/themes";
 import { render, screen } from "@testing-library/react";
-import { ThemeProvider } from "styled-components";
 import SuspenseFallback, { LoadingSpinner, SkeletonLoader } from "../Loading";
-
-// Test wrapper with theme
-const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <ThemeProvider theme={lightTheme}>{children}</ThemeProvider>
-);
 
 describe("Loading Components", () => {
   describe("LoadingSpinner", () => {
     it("renders with default message", () => {
-      render(
-        <TestWrapper>
-          <LoadingSpinner />
-        </TestWrapper>,
-      );
+      render(<LoadingSpinner />);
 
       expect(screen.getByText("Loading...")).toBeInTheDocument();
       expect(screen.getByRole("status")).toBeInTheDocument();
@@ -23,32 +12,20 @@ describe("Loading Components", () => {
 
     it("renders with custom message", () => {
       const customMessage = "Setting up timer...";
-      render(
-        <TestWrapper>
-          <LoadingSpinner message={customMessage} />
-        </TestWrapper>,
-      );
+      render(<LoadingSpinner message={customMessage} />);
 
       expect(screen.getByText(customMessage)).toBeInTheDocument();
     });
 
     it("has correct accessibility attributes", () => {
-      render(
-        <TestWrapper>
-          <LoadingSpinner />
-        </TestWrapper>,
-      );
+      render(<LoadingSpinner />);
 
       const loadingElement = screen.getByRole("status");
       expect(loadingElement).toHaveAttribute("aria-label", "Loading content");
     });
 
     it("renders in fullScreen mode", () => {
-      render(
-        <TestWrapper>
-          <LoadingSpinner fullScreen />
-        </TestWrapper>,
-      );
+      render(<LoadingSpinner fullScreen />);
 
       const loadingElement = screen.getByRole("status");
       expect(loadingElement).toBeInTheDocument();
@@ -57,11 +34,7 @@ describe("Loading Components", () => {
 
   describe("SkeletonLoader", () => {
     it("renders default number of skeleton lines", () => {
-      render(
-        <TestWrapper>
-          <SkeletonLoader />
-        </TestWrapper>,
-      );
+      render(<SkeletonLoader />);
 
       // Default is 3 lines
       const skeletonLines = screen.getAllByTestId(/skeleton-line-\d+/);
@@ -70,22 +43,14 @@ describe("Loading Components", () => {
 
     it("renders custom number of skeleton lines", () => {
       const customLines = 5;
-      render(
-        <TestWrapper>
-          <SkeletonLoader lines={customLines} />
-        </TestWrapper>,
-      );
+      render(<SkeletonLoader lines={customLines} />);
 
       const skeletonLines = screen.getAllByTestId(/skeleton-line-\d+/);
       expect(skeletonLines).toHaveLength(customLines);
     });
 
     it("has correct accessibility attributes", () => {
-      render(
-        <TestWrapper>
-          <SkeletonLoader />
-        </TestWrapper>,
-      );
+      render(<SkeletonLoader />);
 
       const container = screen.getByRole("status");
       expect(container).toHaveAttribute(
@@ -95,11 +60,7 @@ describe("Loading Components", () => {
     });
 
     it("renders with avatar when requested", () => {
-      render(
-        <TestWrapper>
-          <SkeletonLoader avatar />
-        </TestWrapper>,
-      );
+      render(<SkeletonLoader avatar />);
 
       const container = screen.getByRole("status");
       expect(container).toBeInTheDocument();
@@ -108,44 +69,28 @@ describe("Loading Components", () => {
 
   describe("SuspenseFallback", () => {
     it("renders loading spinner with message", () => {
-      render(
-        <TestWrapper>
-          <SuspenseFallback />
-        </TestWrapper>,
-      );
+      render(<SuspenseFallback />);
 
       expect(screen.getByText("Loading content...")).toBeInTheDocument();
       expect(screen.getByRole("status")).toBeInTheDocument();
     });
 
     it("renders skeleton type when specified", () => {
-      render(
-        <TestWrapper>
-          <SuspenseFallback type="skeleton" />
-        </TestWrapper>,
-      );
+      render(<SuspenseFallback type="skeleton" />);
 
       const skeletonLines = screen.getAllByTestId(/skeleton-line-\d+/);
       expect(skeletonLines.length).toBeGreaterThan(0);
     });
 
     it("renders skeleton with custom lines", () => {
-      render(
-        <TestWrapper>
-          <SuspenseFallback type="skeleton" lines={5} />
-        </TestWrapper>,
-      );
+      render(<SuspenseFallback type="skeleton" lines={5} />);
 
       const skeletonLines = screen.getAllByTestId(/skeleton-line-\d+/);
       expect(skeletonLines).toHaveLength(5);
     });
 
     it("renders skeleton with avatar", () => {
-      render(
-        <TestWrapper>
-          <SuspenseFallback type="skeleton" avatar />
-        </TestWrapper>,
-      );
+      render(<SuspenseFallback type="skeleton" avatar />);
 
       const container = screen.getByRole("status");
       expect(container).toBeInTheDocument();

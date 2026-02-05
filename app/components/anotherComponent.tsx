@@ -1,14 +1,5 @@
-"use client";
-
-import styled from "styled-components";
-
-export const HomeWrapper = styled.div`
-  font-size: 24px;
-  color: red;
-`;
-
 const AnotherComponent = () => {
-  return <HomeWrapper>Just another component</HomeWrapper>;
+  return <div className="text-2xl text-red-500">Just another component</div>;
 };
 
 export default AnotherComponent;

@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 0 123 255;
+    --color-secondary: 108 117 125;
+    --color-background: 255 255 255;
+    --color-background-light: 248 249 250;
+    --color-text: 33 37 41;
+    --color-border: 222 226 230;
+    --color-button-bg: 233 236 239;
+  }
+
+  .dark {
+    --color-primary: 66 153 225;
+    --color-secondary: 160 174 192;
+    --color-background: 26 32 44;
+    --color-background-light: 45 55 72;
+    --color-text: 237 242 247;
+    --color-border: 74 85 104;
+    --color-button-bg: 74 85 104;
+  }
+}
