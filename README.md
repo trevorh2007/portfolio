@@ -71,47 +71,6 @@ npm run format       # Format code with Prettier
 npm run format:check # Check if code is formatted
 ```
 
-## 🏗️ Project Structure
-
-```
-portfolio/
-├── app/                    # Next.js App Router directory
-│   ├── components/         # React components
-│   │   ├── shared/         # Reusable components
-│   │   │   ├── ErrorBoundary.tsx
-│   │   │   ├── Loading.tsx
-│   │   │   └── navbar.tsx
-│   │   └── anotherComponent.tsx
-│   ├── hooks/              # Custom React hooks
-│   │   └── useAsync.ts
-│   ├── providers.tsx       # Dark mode context provider
-│   ├── globals.css         # Global Tailwind styles
-│   ├── timer/              # Timer feature pages
-│   │   ├── CountdownTimer.tsx
-│   │   ├── page.tsx
-│   │   └── loading.tsx
-│   ├── contact/            # Contact page
-│   ├── home/               # Home page
-│   ├── layout.tsx          # Root layout
-│   ├── page.tsx            # Home page
-│   ├── loading.tsx         # Global loading component
-│   └── error.tsx           # Global error page
-├── .github/                # GitHub Actions workflows
-│   └── workflows/
-│       ├── publish.yml     # Auto-deployment to GitHub Pages
-│       └── setup-node/     # Reusable Node.js setup action
-├── config/                 # Configuration files (organized structure)
-│   ├── jest/              # Jest testing configuration
-│   │   ├── jest.config.cjs      # Main Jest config
-│   │   ├── jest.config.ci.cjs   # CI-optimized Jest config
-│   │   └── jest.setup.cjs       # Jest test setup
-│   ├── eslint.config.js    # ESLint 9.x flat configuration
-│   └── prettier.config.js  # Prettier formatting configuration
-├── tsconfig.json           # TypeScript configuration
-├── next.config.mjs         # Next.js configuration
-└── package.json            # Dependencies and scripts
-```
-
 ## 🎨 Features Deep Dive
 
 ### Error Handling
@@ -217,7 +176,3 @@ This project is open source and available under the [MIT License](LICENSE).
 Trevor - [GitHub](https://github.com/trevorh2007)
 
 Portfolio Link: [https://trevorh2007.github.io/portfolio](https://trevorh2007.github.io/portfolio)
-
----
-
-⭐ **Star this repo if you find it helpful!**

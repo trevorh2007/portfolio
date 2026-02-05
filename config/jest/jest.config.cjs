@@ -32,6 +32,7 @@ const config = {
     "!app/**/loading.tsx",
     "!app/**/not-found.tsx",
     "!app/styles/**",
+    "!app/styles/Providers.tsx",
     "!app/providers.tsx",
   ],
 

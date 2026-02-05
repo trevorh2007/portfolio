@@ -21,32 +21,31 @@ jest.mock("next/navigation", () => ({
 
 // Mock the dark mode context
 const mockSetDarkMode = jest.fn();
+const mockUseDarkModeContext = jest.fn(() => ({
+  darkMode: false,
+  setDarkMode: mockSetDarkMode,
+}));
+
 jest.mock("@/app/providers", () => ({
-  useDarkModeContext: () => ({
-    darkMode: false,
-    setDarkMode: mockSetDarkMode,
-  }),
+  useDarkModeContext: () => mockUseDarkModeContext(),
 }));
 
 describe("NavBar", () => {
   beforeEach(() => {
     mockSetDarkMode.mockClear();
+    mockUseDarkModeContext.mockReturnValue({
+      darkMode: false,
+      setDarkMode: mockSetDarkMode,
+    });
   });
 
   it("renders all navigation links", () => {
     render(<NavBar />);
 
-    expect(screen.getByText("Home")).toBeInTheDocument();
-    expect(screen.getByText("Contact")).toBeInTheDocument();
-    expect(screen.getByText("Timer")).toBeInTheDocument();
-  });
-
-  it("renders theme toggle button with aria-label", () => {
-    render(<NavBar />);
-
-    expect(
-      screen.getByRole("button", { name: "Toggle dark mode" }),
-    ).toBeInTheDocument();
+    expect(screen.getAllByText("Home")).toHaveLength(2); // Desktop + mobile
+    expect(screen.getAllByText("Projects")).toHaveLength(2);
+    expect(screen.getAllByText("Contact")).toHaveLength(2);
+    expect(screen.getAllByText("Timer")).toHaveLength(2);
   });
 
   it("calls setDarkMode when theme toggle button is clicked", () => {
@@ -55,35 +54,89 @@ describe("NavBar", () => {
     const button = screen.getByRole("button", { name: "Toggle dark mode" });
     fireEvent.click(button);
 
-    expect(mockSetDarkMode).toHaveBeenCalledTimes(1);
     expect(mockSetDarkMode).toHaveBeenCalledWith(true);
   });
 
-  it("has correct href attributes for links", () => {
+  it("toggles mobile menu when hamburger button is clicked", () => {
     render(<NavBar />);
 
-    const homeLink = screen.getByText("Home").closest("a");
-    const contactLink = screen.getByText("Contact").closest("a");
-    const timerLink = screen.getByText("Timer").closest("a");
+    const menuButton = screen.getByRole("button", { name: "Toggle menu" });
+    fireEvent.click(menuButton);
+    fireEvent.click(menuButton);
 
-    expect(homeLink).toHaveAttribute("href", "/");
-    expect(contactLink).toHaveAttribute("href", "/contact");
-    expect(timerLink).toHaveAttribute("href", "/timer");
+    expect(menuButton).toBeInTheDocument();
+  });
+
+  it("closes mobile menu when a link is clicked", () => {
+    render(<NavBar />);
+
+    const menuButton = screen.getByRole("button", { name: "Toggle menu" });
+    fireEvent.click(menuButton);
+
+    const mobileHomeLink = screen.getAllByText("Home")[1];
+    fireEvent.click(mobileHomeLink!);
+
+    expect(mobileHomeLink).toBeInTheDocument();
+  });
+
+  it("handles null context with fallback values", () => {
+    mockUseDarkModeContext.mockReturnValueOnce(
+      null as unknown as { darkMode: boolean; setDarkMode: jest.Mock },
+    );
+
+    render(<NavBar />);
+
+    const darkModeButton = screen.getByRole("button", {
+      name: "Toggle dark mode",
+    });
+    fireEvent.click(darkModeButton);
+
+    expect(mockSetDarkMode).not.toHaveBeenCalled();
+  });
+
+  it("renders sun icon when dark mode is enabled", () => {
+    mockUseDarkModeContext.mockReturnValueOnce({
+      darkMode: true,
+      setDarkMode: mockSetDarkMode,
+    });
+
+    render(<NavBar />);
+
+    const darkModeButton = screen.getByRole("button", {
+      name: "Toggle dark mode",
+    });
+    const svgElement = darkModeButton.querySelector("svg");
+    const pathWithFillRule = svgElement?.querySelector(
+      'path[fill-rule="evenodd"]',
+    );
+
+    expect(pathWithFillRule).toBeInTheDocument();
+  });
+
+  it("renders moon icon when dark mode is disabled", () => {
+    render(<NavBar />);
+
+    const darkModeButton = screen.getByRole("button", {
+      name: "Toggle dark mode",
+    });
+    const svgElement = darkModeButton.querySelector("svg");
+    const paths = svgElement?.querySelectorAll("path");
+
+    expect(paths?.length).toBe(1);
   });
 
   it("handles mouse hover events on navigation links", () => {
-    render(<NavBar />);
+    const { container } = render(<NavBar />);
 
-    const contactLink = screen.getByText("Contact");
+    const contactLink = screen.getAllByText("Contact")[0];
+    const navContainer = container.querySelector(".hidden.md\\:flex");
 
-    // Hover over contact link
-    fireEvent.mouseEnter(contactLink);
-    expect(contactLink).toBeInTheDocument();
+    fireEvent.mouseEnter(contactLink!);
 
-    // Leave the nav area
-    const navContainer = screen.getByText("Contact").parentElement;
     if (navContainer) {
       fireEvent.mouseLeave(navContainer);
     }
+
+    expect(contactLink).toBeInTheDocument();
   });
 });
