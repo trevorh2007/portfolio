@@ -17,7 +17,6 @@ clean code practices and industry-standard tooling.
 - **🔄 Error Boundaries** for graceful error handling
 - **⏳ Loading States** with skeleton loaders and spinners
 - **🌙 Dark/Light Mode** theme switching
-- **⏰ Interactive Timer** with countdown functionality
 - **📱 Responsive Design** for all device sizes
 - **🔧 Modern Tooling**: ESLint 9 + Prettier + TypeScript strict mode
 - **🚀 GitHub Actions** CI/CD with automated testing and deployment
