@@ -50,7 +50,7 @@ describe("CountdownTimer", () => {
           userTime={mockUserTime}
           setResetTimer={mockSetResetTimer}
         />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(screen.getByText(/seconds remaining/i)).toBeInTheDocument();
@@ -63,7 +63,7 @@ describe("CountdownTimer", () => {
           userTime={mockUserTime}
           setResetTimer={mockSetResetTimer}
         />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const timerText = screen.getByRole("heading");
@@ -77,7 +77,7 @@ describe("CountdownTimer", () => {
           userTime={mockUserTime}
           setResetTimer={mockSetResetTimer}
         />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(screen.getByText("Pause Timer")).toBeInTheDocument();
@@ -90,7 +90,7 @@ describe("CountdownTimer", () => {
           userTime={mockUserTime}
           setResetTimer={mockSetResetTimer}
         />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(screen.getByText("Resume Timer")).toBeInTheDocument();
@@ -103,7 +103,7 @@ describe("CountdownTimer", () => {
           userTime={mockUserTime}
           setResetTimer={mockSetResetTimer}
         />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(screen.getByText("Reset Timer")).toBeInTheDocument();
@@ -116,7 +116,7 @@ describe("CountdownTimer", () => {
           userTime={mockUserTime}
           setResetTimer={mockSetResetTimer}
         />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const pauseButton = screen.getByText("Pause Timer");
@@ -132,7 +132,7 @@ describe("CountdownTimer", () => {
           userTime={mockUserTime}
           setResetTimer={mockSetResetTimer}
         />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const resumeButton = screen.getByText("Resume Timer");
@@ -148,7 +148,7 @@ describe("CountdownTimer", () => {
           userTime={mockUserTime}
           setResetTimer={mockSetResetTimer}
         />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const resetButton = screen.getByText("Reset Timer");
@@ -184,7 +184,7 @@ describe("CountdownTimer time display", () => {
           userTime={mockUserTime}
           setResetTimer={mockSetResetTimer}
         />
-      </ThemeProvider>
+      </ThemeProvider>,
     );
 
     expect(screen.getByRole("heading")).toBeInTheDocument();

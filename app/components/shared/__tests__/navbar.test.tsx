@@ -39,7 +39,7 @@ describe("NavBar", () => {
     render(
       <TestWrapper>
         <NavBar />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(screen.getByText("Home")).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe("NavBar", () => {
     render(
       <TestWrapper>
         <NavBar />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(screen.getByText("Turn off the lights")).toBeInTheDocument();
@@ -61,7 +61,7 @@ describe("NavBar", () => {
     render(
       <TestWrapper>
         <NavBar />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const button = screen.getByRole("button", { name: "Turn off the lights" });
@@ -75,7 +75,7 @@ describe("NavBar", () => {
     render(
       <TestWrapper>
         <NavBar />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const homeLink = screen.getByText("Home").closest("a");
