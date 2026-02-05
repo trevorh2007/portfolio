@@ -165,3 +165,85 @@ describe("CountdownTimer time display", () => {
     expect(screen.getByRole("heading")).toBeInTheDocument();
   });
 });
+
+describe("CountdownTimer onExpire callback", () => {
+  const mockSetResetTimer = jest.fn();
+  const mockUserTime = new Date();
+  let onExpireCallback: (() => void) | undefined;
+
+  beforeEach(() => {
+    onExpireCallback = undefined;
+    jest.resetModules();
+
+    // Mock to capture the onExpire callback
+    jest.doMock("react-timer-hook", () => ({
+      useTimer: (config: { onExpire?: () => void }) => {
+        onExpireCallback = config.onExpire;
+        return {
+          seconds: 0,
+          minutes: 0,
+          hours: 0,
+          days: 0,
+          pause: jest.fn(),
+          resume: jest.fn(),
+        };
+      },
+    }));
+  });
+
+  it("calls console.warn when timer expires in non-production", () => {
+    const originalEnv = process.env.NODE_ENV;
+    Object.defineProperty(process.env, "NODE_ENV", {
+      value: "development",
+      writable: true,
+    });
+    const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+
+    render(
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
+    );
+
+    // Trigger the onExpire callback if it was captured
+    if (onExpireCallback) {
+      onExpireCallback();
+      expect(consoleWarnSpy).toHaveBeenCalledWith("Timer is up!");
+    }
+
+    consoleWarnSpy.mockRestore();
+    Object.defineProperty(process.env, "NODE_ENV", {
+      value: originalEnv,
+      writable: true,
+    });
+  });
+
+  it("does not call console.warn in production", () => {
+    const originalEnv = process.env.NODE_ENV;
+    Object.defineProperty(process.env, "NODE_ENV", {
+      value: "production",
+      writable: true,
+    });
+    const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+
+    render(
+      <TimerComponent
+        userTime={mockUserTime}
+        setResetTimer={mockSetResetTimer}
+      />,
+    );
+
+    // Trigger the onExpire callback if it was captured
+    if (onExpireCallback) {
+      onExpireCallback();
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+    }
+
+    consoleWarnSpy.mockRestore();
+    Object.defineProperty(process.env, "NODE_ENV", {
+      value: originalEnv,
+      writable: true,
+    });
+  });
+});

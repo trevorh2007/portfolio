@@ -1,23 +1,21 @@
 import { render, screen } from "@testing-library/react";
 import Home from "../page";
 
-// Mock AnotherComponent to avoid complexity
-jest.mock("../components/anotherComponent", () => {
-  return function AnotherComponent() {
-    return <div>Mocked Another Component</div>;
+// Mock LandingPage component
+jest.mock("../components/landingPage", () => {
+  return function LandingPage() {
+    return <div data-testid="landing-page">Landing Page Content</div>;
   };
 });
 
-describe("Home Page", () => {
-  it("renders the home page", () => {
+describe("Home Page (Root)", () => {
+  it("renders without crashing", () => {
     render(<Home />);
-
-    expect(screen.getByText("Hello world")).toBeInTheDocument();
+    expect(screen.getByTestId("landing-page")).toBeInTheDocument();
   });
 
-  it("renders AnotherComponent", () => {
+  it("renders the LandingPage component", () => {
     render(<Home />);
-
-    expect(screen.getByText("Mocked Another Component")).toBeInTheDocument();
+    expect(screen.getByText("Landing Page Content")).toBeInTheDocument();
   });
 });

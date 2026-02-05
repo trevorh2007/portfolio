@@ -1,12 +1,7 @@
-import AnotherComponent from "./components/anotherComponent";
+import LandingPage from "./components/landingPage";
 
 const Home = () => {
-  return (
-    <div>
-      <AnotherComponent />
-      Hello world
-    </div>
-  );
+  return <LandingPage />;
 };
 
 export default Home;
