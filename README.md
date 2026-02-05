@@ -5,14 +5,14 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15.0.3-black?logo=next.js)](https://nextjs.org/)
 [![Tests](https://img.shields.io/badge/Tests-Jest%20%2B%20RTL-green?logo=jest)](https://jestjs.io/)
 
-A modern, responsive portfolio built with Next.js 15, TypeScript, and styled-components, showcasing
+A modern, responsive portfolio built with Next.js 15, TypeScript, and Tailwind CSS, showcasing
 clean code practices and industry-standard tooling.
 
 ## ✨ Features
 
 - **⚡ Next.js 15** with App Router for optimal performance
 - **🔷 TypeScript** with strict configuration for type safety
-- **💅 Styled Components** for CSS-in-JS styling with themes
+- **🎨 Tailwind CSS** for utility-first styling with custom theme
 - **🧪 Jest + React Testing Library** for comprehensive testing
 - **🔄 Error Boundaries** for graceful error handling
 - **⏳ Loading States** with skeleton loaders and spinners
@@ -24,14 +24,14 @@ clean code practices and industry-standard tooling.
 
 ## 🛠️ Tech Stack
 
-| Technology                                          | Version | Purpose                         |
-| --------------------------------------------------- | ------- | ------------------------------- |
-| [Next.js](https://nextjs.org/)                      | 15.0.3  | React framework with App Router |
-| [React](https://reactjs.org/)                       | 18.3.1  | UI library                      |
-| [TypeScript](https://www.typescriptlang.org/)       | 5.6.3   | Type safety                     |
-| [Styled Components](https://styled-components.com/) | 6.1.19  | CSS-in-JS styling               |
-| [ESLint](https://eslint.org/)                       | 9.15.0  | Code quality & consistency      |
-| [Prettier](https://prettier.io/)                    | 3.3.3   | Code formatting                 |
+| Technology                                    | Version | Purpose                         |
+| --------------------------------------------- | ------- | ------------------------------- |
+| [Next.js](https://nextjs.org/)                | 15.0.3  | React framework with App Router |
+| [React](https://reactjs.org/)                 | 18.3.1  | UI library                      |
+| [TypeScript](https://www.typescriptlang.org/) | 5.6.3   | Type safety                     |
+| [Tailwind CSS](https://tailwindcss.com/)      | 3.x     | Utility-first CSS framework     |
+| [ESLint](https://eslint.org/)                 | 9.15.0  | Code quality & consistency      |
+| [Prettier](https://prettier.io/)              | 3.3.3   | Code formatting                 |
 
 ## 🚀 Quick Start
 
@@ -84,11 +84,8 @@ portfolio/
 │   │   └── anotherComponent.tsx
 │   ├── hooks/              # Custom React hooks
 │   │   └── useAsync.ts
-│   ├── styles/             # Styling and themes
-│   │   ├── GlobalStyles.ts
-│   │   ├── Providers.tsx
-│   │   ├── themes.ts
-│   │   └── registry.tsx
+│   ├── providers.tsx       # Dark mode context provider
+│   ├── globals.css         # Global Tailwind styles
 │   ├── timer/              # Timer feature pages
 │   │   ├── CountdownTimer.tsx
 │   │   ├── page.tsx
@@ -131,9 +128,9 @@ portfolio/
 
 ### Theme System
 
-- **Dark/Light Mode**: Toggle between themes
-- **Styled Components**: Consistent theming across components
-- **Responsive Design**: Mobile-first approach
+- **Dark/Light Mode**: Toggle between themes using class-based dark mode
+- **Tailwind CSS**: Utility-first styling with custom color palette
+- **Responsive Design**: Mobile-first approach with Tailwind breakpoints
 
 ### Code Quality
 
@@ -193,7 +190,7 @@ npm run build    # Build the static export to /out
 
 - **TypeScript**: Use strict types, avoid `any`
 - **Components**: Use functional components with hooks
-- **Styling**: Use styled-components with theme system
+- **Styling**: Use Tailwind utility classes with dark mode variants
 - **Error Handling**: Wrap components in ErrorBoundary when needed
 - **Loading States**: Show loading indicators for async operations
 

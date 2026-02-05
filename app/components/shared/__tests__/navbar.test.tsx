@@ -14,6 +14,11 @@ jest.mock("next/link", () => {
   };
 });
 
+// Mock Next.js usePathname
+jest.mock("next/navigation", () => ({
+  usePathname: jest.fn(() => "/"),
+}));
+
 // Mock the dark mode context
 const mockSetDarkMode = jest.fn();
 jest.mock("@/app/providers", () => ({
@@ -32,20 +37,22 @@ describe("NavBar", () => {
     render(<NavBar />);
 
     expect(screen.getByText("Home")).toBeInTheDocument();
-    expect(screen.getByText("Contact page")).toBeInTheDocument();
+    expect(screen.getByText("Contact")).toBeInTheDocument();
     expect(screen.getByText("Timer")).toBeInTheDocument();
   });
 
-  it("renders theme toggle button with correct text", () => {
+  it("renders theme toggle button with aria-label", () => {
     render(<NavBar />);
 
-    expect(screen.getByText("Turn off the lights")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Toggle dark mode" }),
+    ).toBeInTheDocument();
   });
 
   it("calls setDarkMode when theme toggle button is clicked", () => {
     render(<NavBar />);
 
-    const button = screen.getByRole("button", { name: "Turn off the lights" });
+    const button = screen.getByRole("button", { name: "Toggle dark mode" });
     fireEvent.click(button);
 
     expect(mockSetDarkMode).toHaveBeenCalledTimes(1);
@@ -56,49 +63,27 @@ describe("NavBar", () => {
     render(<NavBar />);
 
     const homeLink = screen.getByText("Home").closest("a");
-    const contactLink = screen.getByText("Contact page").closest("a");
+    const contactLink = screen.getByText("Contact").closest("a");
     const timerLink = screen.getByText("Timer").closest("a");
 
     expect(homeLink).toHaveAttribute("href", "/");
     expect(contactLink).toHaveAttribute("href", "/contact");
     expect(timerLink).toHaveAttribute("href", "/timer");
   });
-});
 
-describe("NavBar with dark mode enabled", () => {
-  beforeEach(() => {
-    mockSetDarkMode.mockClear();
-    // Re-mock with dark mode enabled
-    jest.resetModules();
-    jest.mock("@/app/providers", () => ({
-      useDarkModeContext: () => ({
-        darkMode: true,
-        setDarkMode: mockSetDarkMode,
-      }),
-    }));
-  });
+  it("handles mouse hover events on navigation links", () => {
+    render(<NavBar />);
 
-  it("displays correct button text in dark mode", () => {
-    // For this test, we need to manually create a component with dark mode
-    const DarkModeNavBar = () => {
-      const mockDarkContext = {
-        darkMode: true,
-        setDarkMode: mockSetDarkMode,
-      };
+    const contactLink = screen.getByText("Contact");
 
-      // We'll test by checking if the button toggles correctly
-      return (
-        <button
-          onClick={() => mockDarkContext.setDarkMode(!mockDarkContext.darkMode)}
-        >
-          {mockDarkContext.darkMode
-            ? "Turn on the Lights"
-            : "Turn off the lights"}
-        </button>
-      );
-    };
+    // Hover over contact link
+    fireEvent.mouseEnter(contactLink);
+    expect(contactLink).toBeInTheDocument();
 
-    render(<DarkModeNavBar />);
-    expect(screen.getByText("Turn on the Lights")).toBeInTheDocument();
+    // Leave the nav area
+    const navContainer = screen.getByText("Contact").parentElement;
+    if (navContainer) {
+      fireEvent.mouseLeave(navContainer);
+    }
   });
 });
