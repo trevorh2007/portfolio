@@ -32,14 +32,14 @@ describe("Error Page", () => {
     render(
       <TestWrapper>
         <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     expect(screen.getByText("Something went wrong!")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "We encountered an unexpected error. Please try again or contact support if the problem persists.",
-      ),
+        "We encountered an unexpected error. Please try again or contact support if the problem persists."
+      )
     ).toBeInTheDocument();
   });
 
@@ -47,7 +47,7 @@ describe("Error Page", () => {
     render(
       <TestWrapper>
         <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const button = screen.getByRole("button", { name: "Try Again" });
@@ -58,7 +58,7 @@ describe("Error Page", () => {
     render(
       <TestWrapper>
         <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const button = screen.getByRole("button", { name: "Try Again" });
@@ -77,7 +77,7 @@ describe("Error Page", () => {
     render(
       <TestWrapper>
         <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     // Wait for useEffect to run
@@ -101,7 +101,7 @@ describe("Error Page", () => {
     render(
       <TestWrapper>
         <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     // Wait for useEffect to run
@@ -122,7 +122,7 @@ describe("Error Page", () => {
     render(
       <TestWrapper>
         <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     // In test environment, the details won't show since NODE_ENV !== "development"
@@ -134,7 +134,7 @@ describe("Error Page", () => {
     render(
       <TestWrapper>
         <ErrorPage error={mockError} reset={mockReset} />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     // In test/production mode, error details should not be displayed
@@ -150,7 +150,7 @@ describe("Error Page", () => {
     render(
       <TestWrapper>
         <ErrorPage error={errorWithDigest} reset={mockReset} />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     expect(screen.getByText("Something went wrong!")).toBeInTheDocument();

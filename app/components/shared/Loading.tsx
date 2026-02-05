@@ -14,7 +14,7 @@ const pulse = keyframes`
 `;
 
 const LoadingContainer = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "fullScreen",
+  shouldForwardProp: prop => prop !== "fullScreen",
 })<{ fullScreen?: boolean }>`
   display: flex;
   flex-direction: column;

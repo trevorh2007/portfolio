@@ -20,7 +20,7 @@ describe("Home Page", () => {
     render(
       <TestWrapper>
         <Home />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     expect(screen.getByText("Hello world")).toBeInTheDocument();
@@ -30,7 +30,7 @@ describe("Home Page", () => {
     render(
       <TestWrapper>
         <Home />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     expect(screen.getByText("Mocked Another Component")).toBeInTheDocument();

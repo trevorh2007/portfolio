@@ -60,7 +60,7 @@ const Timer = () => {
 
       await withLoading(async () => {
         // Simulate async operation (could be validation API call)
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        await new Promise(resolve => setTimeout(resolve, 300));
 
         const userDate = new Date();
         userDate.setSeconds(userDate.getSeconds() + seconds);
@@ -79,7 +79,7 @@ const Timer = () => {
     try {
       await withLoading(async () => {
         // Simulate async operation
-        await new Promise((resolve) => setTimeout(resolve, 200));
+        await new Promise(resolve => setTimeout(resolve, 200));
         setResetTimer(true);
       });
     } catch (error) {

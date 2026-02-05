@@ -13,7 +13,7 @@ describe("AnotherComponent", () => {
     render(
       <TestWrapper>
         <AnotherComponent />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     expect(screen.getByText("Just another component")).toBeInTheDocument();
@@ -23,7 +23,7 @@ describe("AnotherComponent", () => {
     const { container } = render(
       <TestWrapper>
         <AnotherComponent />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const styledDiv = container.querySelector("div");

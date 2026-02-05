@@ -67,7 +67,7 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     expect(screen.getByPlaceholderText("Enter seconds...")).toBeInTheDocument();
@@ -77,7 +77,7 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     expect(screen.getByText("Start Timer")).toBeInTheDocument();
@@ -87,11 +87,11 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const input = screen.getByPlaceholderText(
-      "Enter seconds...",
+      "Enter seconds..."
     ) as HTMLInputElement;
 
     // Manually invoke the handleChange to test the error logic
@@ -113,7 +113,7 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const input = screen.getByPlaceholderText("Enter seconds...");
@@ -121,7 +121,7 @@ describe("Timer Page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Please enter a valid positive number"),
+        screen.getByText("Please enter a valid positive number")
       ).toBeInTheDocument();
     });
   });
@@ -130,7 +130,7 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const input = screen.getByPlaceholderText("Enter seconds...");
@@ -138,7 +138,7 @@ describe("Timer Page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Please enter a valid positive number"),
+        screen.getByText("Please enter a valid positive number")
       ).toBeInTheDocument();
     });
   });
@@ -147,7 +147,7 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const input = screen.getByPlaceholderText("Enter seconds...");
@@ -155,7 +155,7 @@ describe("Timer Page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Timer cannot exceed 24 hours"),
+        screen.getByText("Timer cannot exceed 24 hours")
       ).toBeInTheDocument();
     });
   });
@@ -164,11 +164,11 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const input = screen.getByPlaceholderText(
-      "Enter seconds...",
+      "Enter seconds..."
     ) as HTMLInputElement;
 
     // Enter valid input
@@ -189,7 +189,7 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const input = screen.getByPlaceholderText("Enter seconds...");
@@ -206,7 +206,7 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const input = screen.getByPlaceholderText("Enter seconds...");
@@ -237,11 +237,11 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const input = screen.getByPlaceholderText(
-      "Enter seconds...",
+      "Enter seconds..."
     ) as HTMLInputElement;
 
     await act(async () => {
@@ -257,7 +257,7 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     const input = screen.getByPlaceholderText("Enter seconds...");
@@ -288,7 +288,7 @@ describe("Timer Page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByPlaceholderText("Enter seconds..."),
+        screen.getByPlaceholderText("Enter seconds...")
       ).toBeInTheDocument();
     });
   });
@@ -306,7 +306,7 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     // This would be difficult to trigger naturally, but we can verify the component handles it
@@ -333,7 +333,7 @@ describe("Timer Page", () => {
     render(
       <TestWrapper>
         <Timer />
-      </TestWrapper>,
+      </TestWrapper>
     );
 
     // Enter valid time
