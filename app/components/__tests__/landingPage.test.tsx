@@ -28,7 +28,6 @@ describe("LandingPage", () => {
   it("renders CTA buttons", () => {
     render(<LandingPage />);
 
-    expect(screen.getByText("Get in Touch")).toBeInTheDocument();
     expect(screen.getByText("View My Work")).toBeInTheDocument();
   });
 });

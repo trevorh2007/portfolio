@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Contact from "./Contact";
 import SkillCard from "./SkillCard";
 
 const LandingPage = () => {
@@ -30,16 +30,10 @@ const LandingPage = () => {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/contact"
-              className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            >
-              Get in Touch
-            </Link>
+          <div className="flex flex-wrap items-center justify-center">
             <a
-              href="#projects"
-              className="rounded-lg bg-gray-100 dark:bg-gray-800 px-8 py-3 text-base font-semibold text-gray-900 dark:text-white shadow-md ring-1 ring-inset ring-gray-300 dark:ring-gray-700 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              href="/projects"
+              className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
             >
               View My Work
             </a>
@@ -163,38 +157,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="px-6 py-16 sm:py-24 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mb-6 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-            Let&apos;s Build Something Amazing
-          </h2>
-          <p className="mb-10 text-lg text-gray-600 dark:text-gray-400">
-            I&apos;m always interested in hearing about new opportunities and
-            exciting projects. Whether you have a question or just want to say
-            hi, I&apos;ll try my best to get back to you!
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-          >
-            Start a Conversation
-            <svg
-              className="ml-2 h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </Link>
-        </div>
-      </section>
+      <Contact />
     </div>
   );
 };

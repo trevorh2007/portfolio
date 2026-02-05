@@ -44,7 +44,6 @@ describe("NavBar", () => {
 
     expect(screen.getAllByText("Home")).toHaveLength(2); // Desktop + mobile
     expect(screen.getAllByText("Projects")).toHaveLength(2);
-    expect(screen.getAllByText("Contact")).toHaveLength(2);
   });
 
   it("calls setDarkMode when theme toggle button is clicked", () => {
@@ -127,15 +126,15 @@ describe("NavBar", () => {
   it("handles mouse hover events on navigation links", () => {
     const { container } = render(<NavBar />);
 
-    const contactLink = screen.getAllByText("Contact")[0];
+    const projectsLink = screen.getAllByText("Projects")[0];
     const navContainer = container.querySelector(".hidden.md\\:flex");
 
-    fireEvent.mouseEnter(contactLink!);
+    fireEvent.mouseEnter(projectsLink!);
 
     if (navContainer) {
       fireEvent.mouseLeave(navContainer);
     }
 
-    expect(contactLink).toBeInTheDocument();
+    expect(projectsLink).toBeInTheDocument();
   });
 });

@@ -59,15 +59,15 @@ describe("NavLink", () => {
     it("renders an inactive link without hover", () => {
       render(
         <NavLink
-          href="/contact"
-          label="Contact"
+          href="/projects"
+          label="Projects"
           pathname="/"
           variant="desktop"
           hoveredPath={null}
         />,
       );
 
-      const link = screen.getByText("Contact");
+      const link = screen.getByText("Projects");
       expect(link).toBeInTheDocument();
       expect(link).toHaveClass("text-gray-700");
       expect(link).toHaveClass("border-transparent");
@@ -76,15 +76,15 @@ describe("NavLink", () => {
     it("renders a hovered link", () => {
       render(
         <NavLink
-          href="/contact"
-          label="Contact"
+          href="/projects"
+          label="Projects"
           pathname="/"
           variant="desktop"
-          hoveredPath="/contact"
+          hoveredPath="/projects"
         />,
       );
 
-      const link = screen.getByText("Contact");
+      const link = screen.getByText("Projects");
       expect(link).toBeInTheDocument();
       expect(link).toHaveClass("text-blue-600");
       expect(link).toHaveClass("border-blue-600");
@@ -104,14 +104,14 @@ describe("NavLink", () => {
     it("renders an inactive mobile link", () => {
       render(
         <NavLink
-          href="/contact"
-          label="Contact"
+          href="/projects"
+          label="Projects"
           pathname="/"
           variant="mobile"
         />,
       );
 
-      const link = screen.getByText("Contact");
+      const link = screen.getByText("Projects");
       expect(link).toBeInTheDocument();
       expect(link).toHaveClass("text-gray-700");
     });
