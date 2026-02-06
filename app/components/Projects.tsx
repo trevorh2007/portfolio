@@ -18,10 +18,36 @@ const Projects = () => {
       features: [
         "Built with React and TypeScript for type safety and developer experience",
         "Customizable components with Tailwind CSS v4 for easy styling and theming",
+        "Built with Next.js for expandability and seamless integration into modern React applications",
         "Solves personal need for a modern, well-designed component library that integrates seamlessly with Tailwind CSS",
       ],
       liveUrl: "https://trevorh2007.github.io/trevor-ui/",
       githubUrl: "https://github.com/trevorh2007/trevor-ui",
+    },
+    {
+      title: "Wordle Clone",
+      description:
+        "A Wordle clone built with React and TypeScript, featuring words fetched from an open-source API and responsive design",
+      images: [
+        "/projects/wordle-clone-1.png",
+        "/projects/wordle-clone-2.png",
+        "/projects/wordle-clone-3.png",
+      ],
+      tech: [
+        "React",
+        "TypeScript",
+        "Styled Components",
+        "Jest",
+        "React Testing Library",
+      ],
+      features: [
+        "Built with React and TypeScript for a modern development experience",
+        "API integration to fetch words and definitions, providing a dynamic and engaging gameplay experience",
+        "Local storage stat tracking for wins, losses, and current streak, allowing players to track their progress over time",
+        "Responsive design that works seamlessly on both desktop and mobile devices, ensuring an enjoyable gaming experience for all users",
+      ],
+      liveUrl: "https://trevorh2007.github.io/wordle-clone/",
+      githubUrl: "https://github.com/trevorh2007/wordle-clone",
     },
     // Add more projects **coming soon**
   ];

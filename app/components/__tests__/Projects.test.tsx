@@ -36,8 +36,15 @@ describe("Projects", () => {
   it("renders tech stack badges", () => {
     render(<Projects />);
 
-    expect(screen.getByText("React")).toBeInTheDocument();
-    expect(screen.getByText("TypeScript")).toBeInTheDocument();
+    // Use getAllByText for technologies that appear in multiple projects
+    const reactBadges = screen.getAllByText("React");
+    const typescriptBadges = screen.getAllByText("TypeScript");
+
+    // Both projects use React and TypeScript
+    expect(reactBadges.length).toBeGreaterThanOrEqual(1);
+    expect(typescriptBadges.length).toBeGreaterThanOrEqual(1);
+
+    // Check for unique tech from first project
     expect(screen.getByText("Tailwind CSS")).toBeInTheDocument();
     expect(screen.getByText("Comprehensive Testing")).toBeInTheDocument();
   });
@@ -56,22 +63,23 @@ describe("Projects", () => {
   it("renders project links with correct attributes", () => {
     render(<Projects />);
 
-    const liveLink = screen.getByRole("link", { name: /View Live/i });
-    const codeLink = screen.getByRole("link", { name: /View Code/i });
+    const liveLinks = screen.getAllByRole("link", { name: /View Live/i });
+    const codeLinks = screen.getAllByRole("link", { name: /View Code/i });
 
-    expect(liveLink).toHaveAttribute(
+    // Test first project links
+    expect(liveLinks[0]).toHaveAttribute(
       "href",
       "https://trevorh2007.github.io/trevor-ui/",
     );
-    expect(liveLink).toHaveAttribute("target", "_blank");
-    expect(liveLink).toHaveAttribute("rel", "noopener noreferrer");
+    expect(liveLinks[0]).toHaveAttribute("target", "_blank");
+    expect(liveLinks[0]).toHaveAttribute("rel", "noopener noreferrer");
 
-    expect(codeLink).toHaveAttribute(
+    expect(codeLinks[0]).toHaveAttribute(
       "href",
       "https://github.com/trevorh2007/trevor-ui",
     );
-    expect(codeLink).toHaveAttribute("target", "_blank");
-    expect(codeLink).toHaveAttribute("rel", "noopener noreferrer");
+    expect(codeLinks[0]).toHaveAttribute("target", "_blank");
+    expect(codeLinks[0]).toHaveAttribute("rel", "noopener noreferrer");
   });
 
   it("renders image with correct attributes", () => {
@@ -87,30 +95,31 @@ describe("Projects", () => {
   it("shows navigation arrows for multiple images", () => {
     render(<Projects />);
 
-    const prevButton = screen.getByRole("button", { name: "Previous image" });
-    const nextButton = screen.getByRole("button", { name: "Next image" });
+    const prevButtons = screen.getAllByRole("button", {
+      name: "Previous image",
+    });
+    const nextButtons = screen.getAllByRole("button", { name: "Next image" });
 
-    expect(prevButton).toBeInTheDocument();
-    expect(nextButton).toBeInTheDocument();
+    // Should have arrows for each project with multiple images
+    expect(prevButtons.length).toBeGreaterThan(0);
+    expect(nextButtons.length).toBeGreaterThan(0);
   });
 
   it("shows dot indicators for multiple images", () => {
     render(<Projects />);
 
-    const dot1 = screen.getByRole("button", { name: "Go to image 1" });
-    const dot2 = screen.getByRole("button", { name: "Go to image 2" });
-    const dot3 = screen.getByRole("button", { name: "Go to image 3" });
+    const dots = screen.getAllByRole("button", { name: /Go to image \d+/ });
 
-    expect(dot1).toBeInTheDocument();
-    expect(dot2).toBeInTheDocument();
-    expect(dot3).toBeInTheDocument();
+    // Should have dot indicators for projects with multiple images
+    expect(dots.length).toBeGreaterThan(0);
   });
 
   it("navigates to next image when next button is clicked", () => {
     render(<Projects />);
 
-    const nextButton = screen.getByRole("button", { name: "Next image" });
-    fireEvent.click(nextButton);
+    // Get the first project's next button
+    const nextButtons = screen.getAllByRole("button", { name: "Next image" });
+    fireEvent.click(nextButtons[0]!);
 
     const image = screen.getByAltText("Trevor Ui - Image 2");
     expect(image).toHaveAttribute("src", "/projects/trevor-ui-2.png");
@@ -119,8 +128,11 @@ describe("Projects", () => {
   it("navigates to previous image when prev button is clicked", () => {
     render(<Projects />);
 
-    const prevButton = screen.getByRole("button", { name: "Previous image" });
-    fireEvent.click(prevButton);
+    // Get the first project's prev button
+    const prevButtons = screen.getAllByRole("button", {
+      name: "Previous image",
+    });
+    fireEvent.click(prevButtons[0]!);
 
     // Should wrap to last image (image 3)
     const image = screen.getByAltText("Trevor Ui - Image 3");
@@ -130,8 +142,10 @@ describe("Projects", () => {
   it("navigates to specific image when dot indicator is clicked", () => {
     render(<Projects />);
 
-    const dot3 = screen.getByRole("button", { name: "Go to image 3" });
-    fireEvent.click(dot3);
+    // Find dot indicators for first project (Trevor Ui)
+    const allDots = screen.getAllByRole("button", { name: /Go to image \d+/ });
+    // First project has 3 dots (images 1, 2, 3), click the 3rd one (index 2)
+    fireEvent.click(allDots[2]!);
 
     const image = screen.getByAltText("Trevor Ui - Image 3");
     expect(image).toHaveAttribute("src", "/projects/trevor-ui-3.png");
@@ -140,33 +154,35 @@ describe("Projects", () => {
   it("cycles through all images correctly", () => {
     render(<Projects />);
 
-    const nextButton = screen.getByRole("button", { name: "Next image" });
+    const nextButtons = screen.getAllByRole("button", { name: "Next image" });
 
     // Start at image 1, click next to go to image 2
-    fireEvent.click(nextButton);
+    fireEvent.click(nextButtons[0]!);
     expect(screen.getByAltText("Trevor Ui - Image 2")).toBeInTheDocument();
 
     // Click next to go to image 3
-    fireEvent.click(nextButton);
+    fireEvent.click(nextButtons[0]!);
     expect(screen.getByAltText("Trevor Ui - Image 3")).toBeInTheDocument();
 
     // Click next to wrap back to image 1
-    fireEvent.click(nextButton);
+    fireEvent.click(nextButtons[0]!);
     expect(screen.getByAltText("Trevor Ui - Image 1")).toBeInTheDocument();
   });
 
   it("updates image when navigating back and forth", () => {
     render(<Projects />);
 
-    const nextButton = screen.getByRole("button", { name: "Next image" });
-    const prevButton = screen.getByRole("button", { name: "Previous image" });
+    const nextButtons = screen.getAllByRole("button", { name: "Next image" });
+    const prevButtons = screen.getAllByRole("button", {
+      name: "Previous image",
+    });
 
     // Go forward
-    fireEvent.click(nextButton);
+    fireEvent.click(nextButtons[0]!);
     expect(screen.getByAltText("Trevor Ui - Image 2")).toBeInTheDocument();
 
     // Go back
-    fireEvent.click(prevButton);
+    fireEvent.click(prevButtons[0]!);
     expect(screen.getByAltText("Trevor Ui - Image 1")).toBeInTheDocument();
   });
 
@@ -182,13 +198,15 @@ describe("Projects", () => {
   it("renders Key Features section heading", () => {
     render(<Projects />);
 
-    expect(screen.getByText("Key Features")).toBeInTheDocument();
+    const keyFeaturesHeadings = screen.getAllByText("Key Features");
+    expect(keyFeaturesHeadings.length).toBeGreaterThanOrEqual(1);
   });
 
   it("renders Tech Stack section heading", () => {
     render(<Projects />);
 
-    expect(screen.getByText("Tech Stack")).toBeInTheDocument();
+    const techStackHeadings = screen.getAllByText("Tech Stack");
+    expect(techStackHeadings.length).toBeGreaterThanOrEqual(1);
   });
 
   it("applies correct styling classes to project image", () => {
